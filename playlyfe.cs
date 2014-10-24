@@ -10,10 +10,11 @@ namespace PlaylyfeSDK
 
 	public class PlaylyfeException : Exception 
 	{
+		public string name;
 
-		public PlaylyfeException(string message) : base(message) 
+		public PlaylyfeException(JSONNode errors) : base(errors ["error_description"])
 		{
-
+			this.name = (errors ["error"]);
 		}
 	}
 
@@ -128,8 +129,7 @@ namespace PlaylyfeSDK
 			var response = apiClient.Execute(request);
 			if (response.Content.Contains ("error") && response.Content.Contains ("error_description")) 
 			{
-				var errors = JSON.Parse (response.Content);
-				throw new PlaylyfeException (errors ["error_description"]);
+				throw new PlaylyfeException (JSON.Parse (response.Content));
 			}
 			return JSON.Parse(response.Content);
 		}
