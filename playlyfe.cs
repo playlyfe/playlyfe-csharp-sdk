@@ -8,6 +8,15 @@ using SimpleJSON;
 namespace PlaylyfeSDK
 {
 
+	public class PlaylyfeException : Exception 
+	{
+
+		public PlaylyfeException(string message) : base(message) 
+		{
+
+		}
+	}
+
 	public class Playlyfe
 	{
 		private static String client_id;
@@ -100,7 +109,7 @@ namespace PlaylyfeSDK
 					reqMethod = Method.GET;
 					break;
 			}
-			RestRequest request = new RestRequest(route, reqMethod);
+			var request = new RestRequest(route, reqMethod);
 			request.AddHeader ("Content-Type", "application/json");
 			request.AddParameter ("access_token", token["access_token"], ParameterType.QueryString);
 			request.RequestFormat = DataFormat.Json;
@@ -117,6 +126,11 @@ namespace PlaylyfeSDK
 				}
 			}
 			var response = apiClient.Execute(request);
+			if (response.Content.Contains ("error") && response.Content.Contains ("error_description")) 
+			{
+				var errors = JSON.Parse (response.Content);
+				throw new PlaylyfeException (errors ["error_description"]);
+			}
 			return JSON.Parse(response.Content);
 		}
 

@@ -16,10 +16,16 @@ public class test
 			store: null,
 			load: null
 		);
-		Playlyfe.get(
-			route: "/unkown",
-			query: new Dictionary<string, string>(){ {"player_id", "student1"}}
-		);
+
+		try {
+			Playlyfe.get(
+				route: "/unkown",
+				query: new Dictionary<string, string>(){ {"player_id", "student1"}}
+			);
+		}
+		catch(PlaylyfeException ex) {
+			Console.WriteLine (ex.Message);
+		}
 		var players = Playlyfe.get(
 			route: "/players",
 			query: new Dictionary<string, string>(){{"player_id", "student1"}}

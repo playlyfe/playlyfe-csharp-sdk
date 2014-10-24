@@ -35,17 +35,17 @@ Using
 The Playlyfe class allows you to make rest api calls like GET, POST, .. etc
 Example: GET
 ```csharp
-# To get infomation of the player johny
+// To get infomation of the player johny
 player = Playlyfe.get(
-  route: '/player',
+  route: "/player",
   query: new Dictionary<string, string> () { {"player_id", "student1" }}
 );
-Console.WriteLine(player['id']);
-Console.WriteLine(player['scores']);
+Console.WriteLine(player["id"]);
+Console.WriteLine(player["scores"]);
 
-# To get all available processes with query
+// To get all available processes with query
 processes = Playlyfe.get(
-  route: '/processes',
+  route: "/processes",
   query: new Dictionary<string, string> () {{"player_id", "student1"}}
 )
 Console.WriteLine(processes["total"]);
@@ -53,14 +53,14 @@ Console.WriteLine(processes["total"]);
 
 Example: POST
 ```csharp
-# To start a process
+// To start a process
 process =  Playlyfe.post(
   route: "/definitions/processes/collect",
   query: new Dictionary<string, string> () { {"player_id", "johny"} },
   body: new { name = "My First Process" }
 );
 
-#To play a process
+//To play a process
 Playlyfe.post(
   route: "/processes/"+process_id+"/play",
   query: new Dictionary<string, string> () { {"player_id", "johny"} },
@@ -75,23 +75,23 @@ You can initiate a client by giving the client_id and client_secret params
 Playlyfe.init(
     client_id: ""
     client_secret: ""
-    type: 'client' or 'code'
-    redirect_uri: 'The url to redirect to' //only for auth code flow
-    store: token => { Console.WriteLine('storing'); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
+    type: "client" or "code"
+    redirect_uri: "The url to redirect to" //only for auth code flow
+    store: token => { Console.WriteLine("storing"); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
     load:  delegate { 
         var dict = new Dictionary<string, string>(); 
         return dict;
     } // The lambda which will load the access token. This is called internally by the sdk on every request so that the access token can be persisted #between requests
 )
 ```
-In development the sdk caches the access token in memory so you don't need to provide the store and load lambdas. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
+In development the sdk caches the access token in memory so you don"t need to provide the store and load lambdas. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
 ```csharp
     using PlaylyfeSDK;
 
     Playlyfe.init(
       client_id: "",
       client_secret: "",
-      type: 'client',
+      type: "client",
       store: null,
       load: null
     )
@@ -100,7 +100,7 @@ In development the sdk caches the access token in memory so you don't need to pr
 ## API
 ```csharp
 Playlyfe.api(
-    method: 'GET' // The request method can be GET/POST/PUT/PATCH/DELETE
+    method: "GET" // The request method can be GET/POST/PUT/PATCH/DELETE
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
@@ -165,7 +165,7 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.0.3  
+Playlyfe C# SDK v0.0.4  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com  
 
