@@ -1,16 +1,18 @@
-Playlyfe C# SDK[![NuGet Status](http://nugetstatus.com/playlyfe.png)](http://nugetstatus.com/packages/playlyfe)
-=================  
-This is the official OAuth 2.0 C# client SDK for the Playlyfe API.  
-It supports the `client_credentials` and `authorization code` OAuth 2.0 flows.    
-For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe.com/docsharp/api) for more information.
+![Playlyfe C# SDK](./images/pl-csharp-sdk.png "Playlyfe C# SDK")
+
+Playlyfe C# SDK[![NuGet version](https://badge.fury.io/nu/playlyfe.svg)](http://badge.fury.io/nu/playlyfe)
+=================
+This is the official OAuth 2.0 C# client SDK for the Playlyfe API.
+It supports the `client_credentials` and `authorization code` OAuth 2.0 flows.
+For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe.com/docs/api.html) for more information.
 
 Requires
 --------
-.NET >= 4.0 
+.NET >= 4.0
 
 Install
 ----------
-You can direcly download the playlyfe.dll file and reference it in your project
+You can direcly download the `playlyfe.dll` file and reference it in your project
 or if you are using nuget
 ```csharp
 nuget install playlyfe
@@ -18,15 +20,16 @@ nuget install playlyfe
 
 Using
 -----
-### Create a client  
-  If you haven't created a client for your game yet just head over to [Playlyfe](http://playlyfe.com) and login into your account, and go to the game settings and click on client  
-  **1.Client Credentials Flow**  
-    In the client page click on whitelabel client  
-    ![alt text](./images/client.png "")
+### Create a client
+  If you haven't created a client for your game yet just head over to [Playlyfe](http://playlyfe.com) and login into your account, and go to the game settings and click on client
 
-  **2.Authorization Code Flow**  
+  **1.Client Credentials Flow**
+    In the client page click on whitelabel client
+    ![Creating a Whitelabel Client](./images/client.png "Creating a Whitelabel Client")
+
+  **2.Authorization Code Flow**
     In the client page click on backend client and specify the redirect uri this will be the url where you will be redirected to get the token
-    ![alt text](./images/auth.png "")
+    ![Creating a Backend Client](./images/auth.png "Creating a Backend Client")
 
 > Note: If you want to test the sdk in staging you can click the Test Client button.
 
@@ -78,8 +81,8 @@ Playlyfe.init(
     type: "client" or "code"
     redirect_uri: "The url to redirect to" //only for auth code flow
     store: token => { Console.WriteLine("storing"); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
-    load:  delegate { 
-        var dict = new Dictionary<string, string>(); 
+    load:  delegate {
+        var dict = new Dictionary<string, string>();
         return dict;
     } // The lambda which will load the access token. This is called internally by the sdk on every request so that the access token can be persisted #between requests
 )
@@ -156,7 +159,7 @@ string Playlyfe.get_login_url()
 ```csharp
 void Playlyfe.exchange_code(code)
 //This is used in the auth code flow so that the sdk can get the access token.
-//Before any request to the playlyfe api is made this has to be called atleast once. 
+//Before any request to the playlyfe api is made this has to be called atleast once.
 //This should be called in the the route/controller which you specified in your redirect_uri
 ```
 
@@ -165,19 +168,19 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.0.5  
-http://dev.playlyfe.com/  
-Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com  
+Playlyfe C# SDK v0.0.5
+http://dev.playlyfe.com/
+Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:  
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.  
+all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
