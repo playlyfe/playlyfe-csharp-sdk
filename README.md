@@ -76,12 +76,12 @@ Playlyfe.init(
     client_id: ""
     client_secret: ""
     type: 'client' or 'code'
-    redirect_uri: 'The url to redirect to' #only for auth code flow
-    store: token => { Console.WriteLine('storing'); }  # The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
+    redirect_uri: 'The url to redirect to' //only for auth code flow
+    store: token => { Console.WriteLine('storing'); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
     load:  delegate { 
         var dict = new Dictionary<string, string>(); 
         return dict;
-    } # The lambda which will load the access token. This is called internally by the sdk on every request so that the access token can be persisted #between requests
+    } // The lambda which will load the access token. This is called internally by the sdk on every request so that the access token can be persisted #between requests
 )
 ```
 In development the sdk caches the access token in memory so you don't need to provide the store and load lambdas. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
@@ -100,64 +100,64 @@ In development the sdk caches the access token in memory so you don't need to pr
 ## API
 ```csharp
 Playlyfe.api(
-    method: 'GET' # The request method can be GET/POST/PUT/PATCH/DELETE
-    route: "" # The api route to get data from
-    query: Dictionary<string, string> # The query params that you want to send to the route
-    raw: false # Whether you want the response to be in raw string form or json
+    method: 'GET' // The request method can be GET/POST/PUT/PATCH/DELETE
+    route: "" // The api route to get data from
+    query: Dictionary<string, string> // The query params that you want to send to the route
+    raw: false // Whether you want the response to be in raw string form or json
 )
 ```
 
 ## Get
 ```csharp
 Playlyfe.get(
-    route: "" # The api route to get data from
-    query: Dictionary<string, string> # The query params that you want to send to the route
-    raw: false # Whether you want the response to be in raw string form or json
+    route: "" // The api route to get data from
+    query: Dictionary<string, string> // The query params that you want to send to the route
+    raw: false // Whether you want the response to be in raw string form or json
 )
 ```
 ## Post
 ```csharp
 Playlyfe.post(
-    route: "" # The api route to post data to
-    query: Dictionary<string, string> # The query params that you want to send to the route
-    body: new {} # The data you want to post to the api this will be automagically converted to json
+    route: "" // The api route to post data to
+    query: Dictionary<string, string> // The query params that you want to send to the route
+    body: new {} // The data you want to post to the api this will be automagically converted to json
 )
 ```
 ## Patch
 ```csharp
 Playlyfe.patch(
-    route: "" # The api route to patch data
-    query: Dictionary<string, string> # The query params that you want to send to the route
-    body: new {} # The data you want to update in the api this will be automagically converted to json
+    route: "" // The api route to patch data
+    query: Dictionary<string, string> // The query params that you want to send to the route
+    body: new {} // The data you want to update in the api this will be automagically converted to json
 )
 ```
 ## Put
 ```csharp
 Playlyfe.put(
-    route: "" # The api route to put data
-    query: Dictionary<string, string> # The query params that you want to send to the route
-    body: new {} # The data you want to update in the api this will be automagically converted to json
+    route: "" // The api route to put data
+    query: Dictionary<string, string> // The query params that you want to send to the route
+    body: new {} // The data you want to update in the api this will be automagically converted to json
 )
 ```
 ## Delete
 ```csharp
 Playlyfe.delete(
-    route: "" # The api route to delete the component
-    query: Dictionary<string, string> # The query params that you want to send to the route
+    route: "" // The api route to delete the component
+    query: Dictionary<string, string> // The query params that you want to send to the route
 )
 ```
 ## Get Login Url
 ```csharp
 string Playlyfe.get_login_url()
-#This will return the url to which the user needs to be redirected for the user to login. You can use this directly in your views.
+//This will return the url to which the user needs to be redirected for the user to login. You can use this directly in your views.
 ```
 
 ## Exchange Code
 ```csharp
 void Playlyfe.exchange_code(code)
-#This is used in the auth code flow so that the sdk can get the access token.
-#Before any request to the playlyfe api is made this has to be called atleast once. 
-#This should be called in the the route/controller which you specified in your redirect_uri
+//This is used in the auth code flow so that the sdk can get the access token.
+//Before any request to the playlyfe api is made this has to be called atleast once. 
+//This should be called in the the route/controller which you specified in your redirect_uri
 ```
 
 ## Errors
