@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playlyfe", "playlyfe.csproj", "{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6DFFA6A8-2E95-4E71-A8EC-C6B154224746}"
+	ProjectSection(SolutionItems) = preProject
+		playlyfe.cs = playlyfe.cs
+		test.cs = test.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}.Debug|x86.ActiveCfg = Debug|x86
+		{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}.Debug|x86.Build.0 = Debug|x86
+		{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}.Release|x86.ActiveCfg = Release|x86
+		{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = playlyfe.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.VersionControlPolicy = $2
+		$2.inheritsSet = Mono
+		version = 0.01
+	EndGlobalSection
+EndGlobal

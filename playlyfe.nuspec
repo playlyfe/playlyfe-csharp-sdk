@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>playlyfe</id>
+    <version>0.0.3</version>
+    <title>Playlyfe C# SDK</title>
+    <authors>playlyfe</authors>
+    <owners>playlyfe</owners>
+    <licenseUrl>https://github.com/playlyfe/playlyfe-csharp-sdk</licenseUrl>
+    <projectUrl>https://github.com/playlyfe/playlyfe-csharp-sdk</projectUrl>
+    <iconUrl>https://playlyfe.com/images/common/touch-icon-114x114-precomposed.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      This is the official OAuth 2.0 C# client SDK for the Playlyfe API.
+      It supports the client_credentials and authorization code OAuth 2.0 flows.
+    </description>
+    <dependencies>
+      <dependency id="RestSharp" version="104.5.0.0" />
+    </dependencies>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Playlyfe C# .NET</tags>
+  </metadata>
+  <files>
+    <file src="bin/Release/playlyfe.dll" target="lib/net40" />
+  </files>
+</package>
+<!--  mono /usr/bin/nuget.exe pack playlyfe.nuspec to publish -->
