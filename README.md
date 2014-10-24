@@ -1,4 +1,4 @@
-Playlyfe C# SDK[![NuGet Status](http://nugetstatus.com/<package>.png)](http://nugetstatus.com/packages/playlyfe)
+Playlyfe C# SDK[![NuGet Status](http://nugetstatus.com/playlyfe.png)](http://nugetstatus.com/packages/playlyfe)
 =================  
 This is the official OAuth 2.0 C# client SDK for the Playlyfe API.  
 It supports the `client_credentials` and `authorization code` OAuth 2.0 flows.    
