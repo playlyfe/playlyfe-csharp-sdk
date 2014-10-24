@@ -5,8 +5,6 @@ using System.Collections;
 using System.Web;
 using SimpleJSON;
 
-namespace PlaylyfeSDK
-{
 
 	public class PlaylyfeException : Exception 
 	{
@@ -169,5 +167,4 @@ namespace PlaylyfeSDK
 			get_access_token ();
 		}
 	}
-}
 

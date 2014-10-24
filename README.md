@@ -8,7 +8,7 @@ For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe
 
 Requires
 --------
-.NET >= 4.0
+.NET >= 4.0 
 
 Install
 ----------
@@ -168,7 +168,7 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.0.5
+Playlyfe C# SDK v0.1.0
 http://dev.playlyfe.com/
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
