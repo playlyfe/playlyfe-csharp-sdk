@@ -23,6 +23,7 @@ public class test
 			);
 		}
 		catch(PlaylyfeException ex) {
+			Console.WriteLine (ex.Name);
 			Console.WriteLine (ex.Message);
 		}
 		var players = Playlyfe.get(
@@ -30,6 +31,14 @@ public class test
 			query: new Dictionary<string, string>(){{"player_id", "student1"}}
 		);
 		Console.WriteLine(players["data"][0]["id"]);
+
+		var player = Playlyfe.get(
+			route: "/player",
+			query: new Dictionary<string, string>(){{"player_id", "student1"}},
+			raw: true
+		);
+		Console.WriteLine(player.GetType());
+		Console.WriteLine(player);
 
 		Playlyfe.get (
 			route: "/definitions/processes", 

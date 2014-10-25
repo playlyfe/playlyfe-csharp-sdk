@@ -25,4 +25,4 @@
     <file src="bin/Release/playlyfe.dll" target="lib/net40" />
   </files>
 </package>
-<!--  mono /usr/bin/nuget.exe pack playlyfe.nuspec to publish -->
+<!--  mono /usr/bin/nuget.exe pack playlyfe.nuspec  //to publish-->

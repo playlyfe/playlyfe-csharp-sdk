@@ -183,7 +183,7 @@ void Playlyfe.exchange_code(code)
 ```
 
 ## Errors
-A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a name and message field which can be used to determine the type of error that occurred.
+A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
 
 License
 =======

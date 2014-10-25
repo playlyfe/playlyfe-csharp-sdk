@@ -129,12 +129,12 @@ using SimpleJSON;
 			{
 				throw new PlaylyfeException (JSON.Parse (response.Content));
 			}
-      if (raw) {
-        return response.Content;
-      }
-      else {
-        return JSON.Parse(response.Content);
-      }
+		    if (raw == true) {
+		        return response.Content;
+		    }
+		    else {
+		      	return JSON.Parse(response.Content);
+		    }
 		}
 
 		public static JSONNode get(String route, Dictionary<string, string> query, bool raw=false)
