@@ -18,36 +18,36 @@ using SimpleJSON;
 
 	public class Playlyfe
 	{
-		private static String client_id;
-		private static String client_secret;
-		private static String type;
-		private static String redirect_uri;
-		private static String code;
-		private static Func<Dictionary<string, string>, int> store;
-		private static Func<Dictionary<string, string>> load;
-		private	static RestClient apiClient;
+		private String client_id;
+		private String client_secret;
+		private String type;
+		private String redirect_uri;
+		private String code;
+		private Func<Dictionary<string, string>, int> store;
+		private Func<Dictionary<string, string>> load;
+		private	RestClient apiClient;
 
-		public static void init(String client_id, String client_secret, String type, Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load, string redirect_uri="")
+		public Playlyfe(String client_id, String client_secret, String type, Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load, string redirect_uri="")
 		{
 			apiClient = new RestClient("https://api.playlyfe.com/v1");
-			Playlyfe.client_id = client_id;
-			Playlyfe.client_secret = client_secret;
-			Playlyfe.type = type;
+			this.client_id = client_id;
+			this.client_secret = client_secret;
+			this.type = type;
 			if (store == null) {
 				store = token => { Console.WriteLine("Storing Token");return 0;};
 			}
-			Playlyfe.store = store;
-			Playlyfe.load = load;
+			this.store = store;
+			this.load = load;
 			if (type == "client") {
 				get_access_token ();
 			}
 			else
 			{
-				Playlyfe.redirect_uri = redirect_uri;
+				this.redirect_uri = redirect_uri;
 			}
 		}
 
-		public static void get_access_token()
+		public void get_access_token()
 		{
 			var client = new RestClient ("https://playlyfe.com/auth/token");
 			var request = new RestRequest ("", Method.POST);
@@ -65,7 +65,7 @@ using SimpleJSON;
 			}
 			var response = client.Execute<Dictionary<string, string>>(request);
 			TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970,1,1,0,0,0);
-			double expires_at = Math.Round(timeSpan.TotalSeconds * 1000) + Int32.Parse(response.Data["expires_in"]);
+			double expires_at = timeSpan.TotalSeconds + Int32.Parse(response.Data["expires_in"]);
 			response.Data.Add ("expires_at", expires_at.ToString ());
 			response.Data.Remove ("expires_in");
 			store.Invoke (response.Data);
@@ -74,12 +74,12 @@ using SimpleJSON;
 			}
 		}
 
-		public static JSONNode api(String method, String route, Dictionary<string, string> query, object body=null, bool raw=false)
+		public JSONNode api(String method, String route, Dictionary<string, string> query, object body=null, bool raw=false)
 		{
 			var token = load.Invoke ();
 			TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970,1,1,0,0,0);
-			double now = Math.Round (timeSpan.TotalSeconds * 1000);
-			if(Double.Parse(token["expires_at"]) <= now) {
+			double now = timeSpan.TotalSeconds;
+			if(now >= Double.Parse(token["expires_at"]) ) {
 				get_access_token ();
 				token = load.Invoke ();
 			}
@@ -137,38 +137,38 @@ using SimpleJSON;
 		    }
 		}
 
-		public static JSONNode get(String route, Dictionary<string, string> query, bool raw=false)
+		public JSONNode get(String route, Dictionary<string, string> query, bool raw=false)
 		{
 			return api("GET", route, query, new {}, raw);
 		}
 
-		public static JSONNode post(string route, Dictionary<string, string> query, object body)
+		public JSONNode post(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("POST", route, query, body);
 		}
 
-		public static JSONNode put(string route, Dictionary<string, string> query, object body)
+		public JSONNode put(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("PUT", route, query, body);
 		}
 
-		public static JSONNode patch(string route, Dictionary<string, string> query, object body)
+		public JSONNode patch(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("PATCH", route, query, body);
 		}
 
-		public static JSONNode delete(string route, Dictionary<string, string> query)
+		public JSONNode delete(string route, Dictionary<string, string> query)
 		{
 			return api ("DELETE", route, query, new {});
 		}
 
-		public static string get_login_url() {
+		public string get_login_url() {
 			var url = "https://playlyfe.com/auth?response_type=code&client_id" + client_id + "&redirect_uri" + redirect_uri;
 			return HttpUtility.UrlEncode(url);
 		}
 
-		public static void exchange_code(String code) {
-			Playlyfe.code = code;
+		public void exchange_code(string code) {
+			this.code = code;
 			get_access_token ();
 		}
 	}

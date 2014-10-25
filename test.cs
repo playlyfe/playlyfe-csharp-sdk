@@ -8,7 +8,7 @@ using Microsoft.CSharp;
 public class test
 {
 	public static void Main () {
-		Playlyfe.init (
+		var pl = new Playlyfe(
 			client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 			client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 		    type: "client",
@@ -16,66 +16,69 @@ public class test
 			load: null
 		);
 
+		var player_id = new Dictionary<string, string> (){ { "player_id", "student1" } };
 		try {
-			Playlyfe.get(
+			pl.get(
 				route: "/unkown",
-				query: new Dictionary<string, string>(){ {"player_id", "student1"}}
+				query: player_id
 			);
 		}
 		catch(PlaylyfeException ex) {
 			Console.WriteLine (ex.Name);
 			Console.WriteLine (ex.Message);
 		}
-		var players = Playlyfe.get(
+		var players = pl.get(
 			route: "/players",
-			query: new Dictionary<string, string>(){{"player_id", "student1"}}
+			query: player_id
 		);
 		Console.WriteLine(players["data"][0]["id"]);
 
-		var player = Playlyfe.get(
+		var player = pl.get(
 			route: "/player",
-			query: new Dictionary<string, string>(){{"player_id", "student1"}},
+			query: player_id,
 			raw: true
 		);
 		Console.WriteLine(player.GetType());
 		Console.WriteLine(player);
 
-		Playlyfe.get (
-			route: "/definitions/processes", 
-			query:  new Dictionary<string, string> (){ { "player_id", "student1" } }
+		pl.get (
+			route: "/definitions/processes",
+			query: player_id
 		);
-		Playlyfe.get (
-			route:  "/definitions/teams", 
-			query:  new Dictionary<string, string> (){ { "player_id", "student1" } }
+		pl.get (
+			route:  "/definitions/teams",
+			query:  player_id
 		);
 
-		var processes = Playlyfe.get (
+		var processes = pl.get (
 			route:  "/processes",
-			query:  new Dictionary<string, string> (){ { "player_id", "student1" } }
+			query:  player_id
 		);
 		Console.WriteLine (processes["total"]);
 
-		Playlyfe.get (
-			route:  "/teams",
-			query:  new Dictionary<string, string> (){ { "player_id", "student1" } }
+		pl.get (
+			route:  "/teams",  
+
+			query:  player_id
 		);
 
-		var new_process = Playlyfe.post (
+		var new_process = pl.post (
 		 	route: "/definitions/processes/module1",
-		    query: new Dictionary<string, string> () { {"player_id", "student1"} },
-		 	body: null
+		    query: player_id,
+	
+			body: null
 		);
 
-		var patched_process = Playlyfe.patch (
+		var patched_process = pl.patch (
 		 	route: "/processes/" + new_process ["id"],
-		 	query: new Dictionary<string, string> () { {"player_id", "student1"} },
+		 	query: player_id,
 		 	body: new { name = "patched_process", access = "PUBLIC"}
 		);
 		Console.WriteLine (patched_process["id"]);
 
-		var deleted_process = Playlyfe.delete(
+		var deleted_process = pl.delete(
 		 	route: "/processes/"+new_process["id"],
-		 	query: new Dictionary<string, string> () { {"player_id", "student1"} }
+		 	query: player_id
 		);
 		Console.WriteLine (deleted_process["message"]);
 		Environment.Exit (0);

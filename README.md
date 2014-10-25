@@ -35,11 +35,11 @@ Using
 
   And then note down the client id and client secret you will need it later for using it in the sdk
 
-# Example
+# Examples
 The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
 To get started initialize your client using client credentials flow and then start making requests
 ```csharp
-Playlyfe.init(
+var playlyfe = new Playlyfe(
     client_id: "Your client id",
     client_secret: "Your client secret",
     type: "code",
@@ -49,7 +49,7 @@ Playlyfe.init(
 // This will take your client id and secret and use it to fetch the access token to make further requests.
 
 // To get infomation of a  player
-player = Playlyfe.get(
+player = playlyfe.get(
   route: "/player",
   query: new Dictionary<string, string> () { {"player_id", "student1" }}
 );
@@ -57,20 +57,20 @@ Console.WriteLine(player["id"]);
 Console.WriteLine(player["alias"]);
 
 // To get all available processes
-processes = Playlyfe.get(
+processes = playlyfe.get(
   route: "/processes",
   query: new Dictionary<string, string> () {{"player_id", "student1"}}
 )
 Console.WriteLine(processes["total"]);
 // To start a process
-process =  Playlyfe.post(
+process =  playlyfe.post(
   route: "/definitions/processes/collect",
   query: new Dictionary<string, string> () { {"player_id", "student1"} },
   body: new { name = "My First Process" }
 );
 
 //To play a process
-Playlyfe.post(
+playlyfe.post(
   route: "/processes/"+process_id+"/play",
   query: new Dictionary<string, string> () { {"player_id", "johny"} },
   body: new { trigger = trigger_name }
@@ -78,7 +78,7 @@ Playlyfe.post(
 
 // A PLaylyfeException is thrown when a error from the playlyfe platform is returned on a request
 try {
-  Playlyfe.get(
+  playlyfe.get(
     route: "/unkown",
     query: new Dictionary<string, string>(){ {"player_id", "student1"}}
   );
@@ -93,7 +93,7 @@ catch(PlaylyfeException err) {
 ## Init
 You can initiate a client by giving the client_id and client_secret params
 ```csharp
-Playlyfe.init(
+Playlyfe(
     client_id: "Your client id",
     client_secret: "Your client secret",
     type: "client" or "code",
@@ -110,7 +110,7 @@ Playlyfe.init(
 ```
 In development the sdk caches the access token in memory so you don"t need to provide the store and load lambdas/delegates. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
 ```csharp
-    Playlyfe.init(
+    new Playlyfe(
       client_id: "Your client id",
       client_secret: "Your client secret",
       type: "client",
@@ -121,7 +121,7 @@ In development the sdk caches the access token in memory so you don"t need to pr
 
 ## API
 ```csharp
-Playlyfe.api(
+JSONNode api(
     method: "GET" // The request method can be GET/POST/PUT/PATCH/DELETE
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
@@ -131,7 +131,7 @@ Playlyfe.api(
 
 ## Get
 ```csharp
-Playlyfe.get(
+JSONNode get(
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
@@ -139,7 +139,7 @@ Playlyfe.get(
 ```
 ## Post
 ```csharp
-Playlyfe.post(
+JSONNode post(
     route: "" // The api route to post data to
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to post to the api this will be automagically converted to json
@@ -147,7 +147,7 @@ Playlyfe.post(
 ```
 ## Patch
 ```csharp
-Playlyfe.patch(
+JSONNode patch(
     route: "" // The api route to patch data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
@@ -155,7 +155,7 @@ Playlyfe.patch(
 ```
 ## Put
 ```csharp
-Playlyfe.put(
+JSONNode put(
     route: "" // The api route to put data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
@@ -163,20 +163,20 @@ Playlyfe.put(
 ```
 ## Delete
 ```csharp
-Playlyfe.delete(
+JSONNode delete(
     route: "" // The api route to delete the component
     query: Dictionary<string, string> // The query params that you want to send to the route
 )
 ```
 ## Get Login Url
 ```csharp
-string Playlyfe.get_login_url()
+string get_login_url()
 //This will return the url to which the user needs to be redirected for the user to login. You can use this directly in your views.
 ```
 
 ## Exchange Code
 ```csharp
-void Playlyfe.exchange_code(code)
+void exchange_code(string code)
 //This is used in the auth code flow so that the sdk can get the access token.
 //Before any request to the playlyfe api is made this has to be called atleast once.
 //This should be called in the the route/controller which you specified in your redirect_uri
@@ -187,7 +187,7 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.1.1  
+Playlyfe C# SDK v0.2.0  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
