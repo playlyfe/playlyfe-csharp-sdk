@@ -8,7 +8,7 @@ For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe
 
 Requires
 --------
-.NET >= 4.0 
+.NET >= 4.0 or Mono >= 3.2.8
 
 Install
 ----------
@@ -35,31 +35,37 @@ Using
 
   And then note down the client id and client secret you will need it later for using it in the sdk
 
-The Playlyfe class allows you to make rest api calls like GET, POST, .. etc
-Example: GET
+# Example
+The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
+To get started initialize your client using client credentials flow and then start making requests
 ```csharp
-// To get infomation of the player johny
+Playlyfe.init(
+    client_id: "Your client id",
+    client_secret: "Your client secret",
+    type: "code",
+    store: null,
+    load: null
+);
+// This will take your client id and secret and use it to fetch the access token to make further requests.
+
+// To get infomation of a  player
 player = Playlyfe.get(
   route: "/player",
   query: new Dictionary<string, string> () { {"player_id", "student1" }}
 );
 Console.WriteLine(player["id"]);
-Console.WriteLine(player["scores"]);
+Console.WriteLine(player["alias"]);
 
-// To get all available processes with query
+// To get all available processes
 processes = Playlyfe.get(
   route: "/processes",
   query: new Dictionary<string, string> () {{"player_id", "student1"}}
 )
 Console.WriteLine(processes["total"]);
-```
-
-Example: POST
-```csharp
 // To start a process
 process =  Playlyfe.post(
   route: "/definitions/processes/collect",
-  query: new Dictionary<string, string> () { {"player_id", "johny"} },
+  query: new Dictionary<string, string> () { {"player_id", "student1"} },
   body: new { name = "My First Process" }
 );
 
@@ -69,6 +75,18 @@ Playlyfe.post(
   query: new Dictionary<string, string> () { {"player_id", "johny"} },
   body: new { trigger = trigger_name }
 );
+
+// A PLaylyfeException is thrown when a error from the playlyfe platform is returned on a request
+try {
+  Playlyfe.get(
+    route: "/unkown",
+    query: new Dictionary<string, string>(){ {"player_id", "student1"}}
+  );
+}
+catch(PlaylyfeException err) {
+  Console.WriteLine (err.Name); // route_not_found
+  Console.WriteLine (err.Message); // This route does not exist
+}
 ```
 
 # Documentation
@@ -76,24 +94,25 @@ Playlyfe.post(
 You can initiate a client by giving the client_id and client_secret params
 ```csharp
 Playlyfe.init(
-    client_id: ""
-    client_secret: ""
-    type: "client" or "code"
-    redirect_uri: "The url to redirect to" //only for auth code flow
+    client_id: "Your client id",
+    client_secret: "Your client secret",
+    type: "client" or "code",
+    redirect_uri: "The url to redirect to" //only for authorization code flow
     store: token => { Console.WriteLine("storing"); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
     load:  delegate {
-        var dict = new Dictionary<string, string>();
+        var dict = new Dictionary<string, string>() {
+            "access_token", "my access token",
+            "expires_at", "expires_at_time"
+        };
         return dict;
     } // The lambda which will load the access token. This is called internally by the sdk on every request so that the access token can be persisted #between requests
 )
 ```
-In development the sdk caches the access token in memory so you don"t need to provide the store and load lambdas. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
+In development the sdk caches the access token in memory so you don"t need to provide the store and load lambdas/delegates. But in production it is highly recommended to persist the token to a database. It is very simple and easy to do it with redis. You can see the test cases for more examples.
 ```csharp
-    using PlaylyfeSDK;
-
     Playlyfe.init(
-      client_id: "",
-      client_secret: "",
+      client_id: "Your client id",
+      client_secret: "Your client secret",
       type: "client",
       store: null,
       load: null
@@ -168,8 +187,8 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.1.0
-http://dev.playlyfe.com/
+Playlyfe C# SDK v0.1.1  
+http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

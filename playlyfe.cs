@@ -6,13 +6,13 @@ using System.Web;
 using SimpleJSON;
 
 
-	public class PlaylyfeException : Exception 
+	public class PlaylyfeException : Exception
 	{
-		public string name;
+		public string Name;
 
 		public PlaylyfeException(JSONNode errors) : base(errors ["error_description"])
 		{
-			this.name = (errors ["error"]);
+			this.Name = (errors ["error"]);
 		}
 	}
 
@@ -40,8 +40,8 @@ using SimpleJSON;
 			Playlyfe.load = load;
 			if (type == "client") {
 				get_access_token ();
-			} 
-			else 
+			}
+			else
 			{
 				Playlyfe.redirect_uri = redirect_uri;
 			}
@@ -53,11 +53,11 @@ using SimpleJSON;
 			var request = new RestRequest ("", Method.POST);
 			request.AddParameter ("client_id", client_id);
 			request.AddParameter ("client_secret", client_secret);
-			if (type == "client") 
+			if (type == "client")
 			{
 				request.AddParameter ("grant_type", "client_credentials");
-			} 
-			else 
+			}
+			else
 			{
 				request.AddParameter ("grant_type", "authorization_code");
 				request.AddParameter ("redirect_uri", redirect_uri);
@@ -112,7 +112,7 @@ using SimpleJSON;
 			request.AddHeader ("Content-Type", "application/json");
 			request.AddParameter ("access_token", token["access_token"], ParameterType.QueryString);
 			request.RequestFormat = DataFormat.Json;
-			if (query != null) 
+			if (query != null)
 			{
 				foreach (var pair in query)
 				{
@@ -125,11 +125,16 @@ using SimpleJSON;
 				}
 			}
 			var response = apiClient.Execute(request);
-			if (response.Content.Contains ("error") && response.Content.Contains ("error_description")) 
+			if (response.Content.Contains ("error") && response.Content.Contains ("error_description"))
 			{
 				throw new PlaylyfeException (JSON.Parse (response.Content));
 			}
-			return JSON.Parse(response.Content);
+      if (raw) {
+        return response.Content;
+      }
+      else {
+        return JSON.Parse(response.Content);
+      }
 		}
 
 		public static JSONNode get(String route, Dictionary<string, string> query, bool raw=false)
