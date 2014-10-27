@@ -90,7 +90,6 @@ catch(PlaylyfeException err) {
 ```
 
 # Documentation
-## Init
 You can initiate a client by giving the client_id and client_secret params
 ```csharp
 Playlyfe(
@@ -119,7 +118,7 @@ In development the sdk caches the access token in memory so you don"t need to pr
     )
 ```
 
-## API
+**API**
 ```csharp
 JSONNode api(
     method: "GET" // The request method can be GET/POST/PUT/PATCH/DELETE
@@ -129,7 +128,7 @@ JSONNode api(
 )
 ```
 
-## Get
+**Get**
 ```csharp
 JSONNode get(
     route: "" // The api route to get data from
@@ -137,7 +136,7 @@ JSONNode get(
     raw: false // Whether you want the response to be in raw string form or json
 )
 ```
-## Post
+**Post**
 ```csharp
 JSONNode post(
     route: "" // The api route to post data to
@@ -145,7 +144,7 @@ JSONNode post(
     body: new {} // The data you want to post to the api this will be automagically converted to json
 )
 ```
-## Patch
+**Patch**
 ```csharp
 JSONNode patch(
     route: "" // The api route to patch data
@@ -153,7 +152,7 @@ JSONNode patch(
     body: new {} // The data you want to update in the api this will be automagically converted to json
 )
 ```
-## Put
+**Put**
 ```csharp
 JSONNode put(
     route: "" // The api route to put data
@@ -161,20 +160,20 @@ JSONNode put(
     body: new {} // The data you want to update in the api this will be automagically converted to json
 )
 ```
-## Delete
+**Delete**
 ```csharp
 JSONNode delete(
     route: "" // The api route to delete the component
     query: Dictionary<string, string> // The query params that you want to send to the route
 )
 ```
-## Get Login Url
+**Get Login Url**
 ```csharp
 string get_login_url()
 //This will return the url to which the user needs to be redirected for the user to login. You can use this directly in your views.
 ```
 
-## Exchange Code
+**Exchange Code**
 ```csharp
 void exchange_code(string code)
 //This is used in the auth code flow so that the sdk can get the access token.
@@ -182,7 +181,7 @@ void exchange_code(string code)
 //This should be called in the the route/controller which you specified in your redirect_uri
 ```
 
-## Errors
+**Errors**
 A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
 
 License
