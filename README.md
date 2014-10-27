@@ -76,7 +76,7 @@ playlyfe.post(
   body: new { trigger = trigger_name }
 );
 
-// A PLaylyfeException is thrown when a error from the playlyfe platform is returned on a request
+// A PLaylyfeException is thrown when an error from the playlyfe platform is returned on a request
 try {
   playlyfe.get(
     route: "/unkown",
