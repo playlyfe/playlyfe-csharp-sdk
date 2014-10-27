@@ -181,7 +181,7 @@ void exchange_code(string code)
 //This should be called in the the route/controller which you specified in your redirect_uri
 ```
 
-**Errors**
+**Errors**  
 A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
 
 License
