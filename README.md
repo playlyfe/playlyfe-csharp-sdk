@@ -137,7 +137,7 @@ exchange_code(code)
 Now you should be able to access the Playlyfe api across all your
 controllers.
 ```csharp
-    public class Client : NancyModule
+    public class Code : NancyModule
     {
         public static Playlyfe plCode = null;
         public static string user = null;
