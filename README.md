@@ -184,6 +184,12 @@ void exchange_code(string code)
 **Errors**  
 A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
 
+Contributors
+============
+pyros2097 @pyros2097
+Kumar Harsh @kumarharsh
+Rafael Kato @rafakato
+
 License
 =======
 Playlyfe C# SDK v0.3.1  
