@@ -89,6 +89,92 @@ catch(PlaylyfeException err) {
 }
 ```
 
+# Examples for [Nancy Framework](http://nancyfx.org/)
+## 1. Client Credentials Flow
+A typical nancy app using client credentials code flow with a single route would look something like this
+```csharp
+    public class Client : NancyModule
+    {
+        public static Playlyfe plClient = null;
+        public Client ()
+        {
+            if (plClient == null)
+                plClient = new Playlyfe (
+                    client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
+                    client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
+                    type: "client",
+                    store: null,
+                    load: null
+                );
+            Get["/client"] = parameters => {
+                dynamic players = plClient.get(route: "/game/players", query: null);
+                return listAllPlayers(players);
+            };
+        }
+
+        public static String listAllPlayers(dynamic players)
+        {
+            var html = "<ul>";
+            foreach(dynamic player in players["data"]) {
+                html += "<li><p>";
+                html += "<bold>Player ID</bold>:   "+ player["id"];
+                html += "<bold>Player Alias</bold>:    "+ player["alias"];
+                html += "</p></li>";
+            }
+            html += "</ul>";
+            return html;
+        }
+    }
+```
+## 2. Authorization Code Flow
+In this flow you will have a route which will get the authorization code and using this the sdk can get the access token. You need a view which will allow your user to login using the playlyfe platform. And then playlyfe server with make a get request with the code to your redirect uri. And you should find the code in the query params or the url and exchange the code with the Playlyfe SDK.
+```csharp
+exchange_code(code)
+```
+
+> Host your ASP.NET server with ip address localhost:3000
+
+Now you should be able to access the Playlyfe api across all your
+controllers.
+```csharp
+    public class Client : NancyModule
+    {
+        public static Playlyfe plCode = null;
+        public static string user = null;
+        public Client ()
+        {
+            if(plCode == null)
+                plCode = new Playlyfe(
+                    client_id: "OGUxYTRlZWUtZTAyOS00ZThjLWIyNzQtNGEwMGRiNjk1ZGRj",
+                    client_secret: "NDMyMDMyOTktM2NhOS00MGJlLTg4NzYtZWJjMzNhNTE1NDYwYTc1NGU2NTAtNWI1ZS0xMWU0LTkwYTEtYTM4MzkzMzkxZTY1",
+                    type: "code",
+                    redirect_uri: "http://localhost:3000/code",
+                    store: null,
+                    load: null
+                );
+            Get ["/code"] = parameters => {
+                var dict = (DynamicDictionary) this.Request.Query;
+                if(dict.ContainsKey("code")) {
+                    plCode.exchange_code(dict["code"].ToString());
+                    user = "logged_in";
+                }
+                if(user != null)
+                {
+                    dynamic players = plCode.get(route: "/game/players", query: null);
+                    return listAllPlayers(players);
+                }
+                else {
+                    return "<a href=\""+ plCode.get_login_url() + "\">Please Login to your Playlyfe Account</a>";
+                }
+            };
+
+            Get ["/logout"] = parameters => {
+                user = null;
+                return "logged_out";
+            };
+        }
+    }
+```
 # Documentation
 You can initiate a client by giving the client_id and client_secret params
 ```csharp
