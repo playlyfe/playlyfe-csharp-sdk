@@ -36,12 +36,9 @@ using System.Web;
 			}
 			this.store = store;
 			this.load = load;
+			this.redirect_uri = redirect_uri;
 			if (type == "client") {
 				get_access_token ();
-			}
-			else
-			{
-				this.redirect_uri = redirect_uri;
 			}
 		}
 
@@ -62,6 +59,10 @@ using System.Web;
 				request.AddParameter ("code", code);
 			}
 			var response = client.Execute<Dictionary<string, string>>(request);
+			if (response.Content.Contains ("error") && response.Content.Contains ("error_description"))
+			{
+				throw new PlaylyfeException (response.Data["error"], response.Data["error_description"]);
+			}
 			TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970,1,1,0,0,0);
 			double expires_at = timeSpan.TotalSeconds + Int32.Parse(response.Data["expires_in"]);
 			response.Data.Add ("expires_at", expires_at.ToString ());
