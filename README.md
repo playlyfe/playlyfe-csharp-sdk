@@ -186,9 +186,9 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 Contributors
 ============
-pyros2097 @pyros2097
-Kumar Harsh @kumarharsh
-Rafael Kato @rafakato
+pyros2097 @pyros2097  
+Kumar Harsh @kumarharsh  
+Rafael Kato @rafakato  
 
 License
 =======
