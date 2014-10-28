@@ -186,7 +186,7 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.3.0  
+Playlyfe C# SDK v0.3.1  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 

@@ -6,7 +6,7 @@
     <ProjectGuid>{345AD631-2EE6-4C2A-AC1C-D0A738CA0D21}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>playlyfe</AssemblyName>
-    <ReleaseVersion>0.3.0</ReleaseVersion>
+    <ReleaseVersion>0.3.1</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
