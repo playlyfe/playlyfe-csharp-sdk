@@ -30,7 +30,6 @@ Global
 		{FF83E48D-5454-4417-A956-FB34773F3A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF83E48D-5454-4417-A956-FB34773F3A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF83E48D-5454-4417-A956-FB34773F3A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF83E48D-5454-4417-A956-FB34773F3A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

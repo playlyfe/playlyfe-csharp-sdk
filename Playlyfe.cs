@@ -165,7 +165,8 @@ using System.Web;
 		public string get_login_url() 
 		{
 			var url = "https://playlyfe.com/auth?response_type=code&client_id=" + client_id + "&redirect_uri=" + redirect_uri;
-			return HttpUtility.UrlEncode(url);
+			//Console.WriteLine (HttpUtility.UrlEncode (url));
+			return url;
 		}
 
 		public void exchange_code(string code) 
