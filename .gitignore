@@ -3,4 +3,5 @@ packages
 .nupkg
 *.suo
 *.userprefs
-bin/
+bin/Debug
+test/bin
