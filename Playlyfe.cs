@@ -3,16 +3,14 @@ using RestSharp;
 using System.Collections.Generic;
 using System.Collections;
 using System.Web;
-using SimpleJSON;
-
 
 	public class PlaylyfeException : Exception
 	{
 		public string Name;
 
-		public PlaylyfeException(JSONNode errors) : base(errors ["error_description"])
+		public PlaylyfeException(String error, String error_description) : base(error_description)
 		{
-			this.Name = (errors ["error"]);
+			this.Name = error;
 		}
 	}
 
@@ -47,7 +45,7 @@ using SimpleJSON;
 			}
 		}
 
-		public void get_access_token()
+		private void get_access_token()
 		{
 			var client = new RestClient ("https://playlyfe.com/auth/token");
 			var request = new RestRequest ("", Method.POST);
@@ -74,7 +72,7 @@ using SimpleJSON;
 			}
 		}
 
-		public JSONNode api(String method, String route, Dictionary<string, string> query, object body=null, bool raw=false)
+		public dynamic api(String method, String route, Dictionary<string, string> query, object body=null, bool raw=false)
 		{
 			var token = load.Invoke ();
 			TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970,1,1,0,0,0);
@@ -127,47 +125,50 @@ using SimpleJSON;
 			var response = apiClient.Execute(request);
 			if (response.Content.Contains ("error") && response.Content.Contains ("error_description"))
 			{
-				throw new PlaylyfeException (JSON.Parse (response.Content));
+				dynamic error = SimpleJson.DeserializeObject<object> (response.Content);
+				throw new PlaylyfeException (error["error"], error ["error_description"]);
 			}
 		    if (raw == true) {
 		        return response.Content;
 		    }
 		    else {
-		      	return JSON.Parse(response.Content);
+				return SimpleJson.DeserializeObject<dynamic>(response.Content);
 		    }
 		}
 
-		public JSONNode get(String route, Dictionary<string, string> query, bool raw=false)
+		public dynamic get(String route, Dictionary<string, string> query, bool raw=false)
 		{
 			return api("GET", route, query, new {}, raw);
 		}
 
-		public JSONNode post(string route, Dictionary<string, string> query, object body)
+		public dynamic post(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("POST", route, query, body);
 		}
 
-		public JSONNode put(string route, Dictionary<string, string> query, object body)
+		public dynamic put(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("PUT", route, query, body);
 		}
 
-		public JSONNode patch(string route, Dictionary<string, string> query, object body)
+		public dynamic patch(string route, Dictionary<string, string> query, object body)
 		{
 			return api ("PATCH", route, query, body);
 		}
 
-		public JSONNode delete(string route, Dictionary<string, string> query)
+		public dynamic delete(string route, Dictionary<string, string> query)
 		{
 			return api ("DELETE", route, query, new {});
 		}
 
-		public string get_login_url() {
+		public string get_login_url() 
+		{
 			var url = "https://playlyfe.com/auth?response_type=code&client_id" + client_id + "&redirect_uri" + redirect_uri;
 			return HttpUtility.UrlEncode(url);
 		}
 
-		public void exchange_code(string code) {
+		public void exchange_code(string code) 
+		{
 			this.code = code;
 			get_access_token ();
 		}
