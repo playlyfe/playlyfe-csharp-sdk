@@ -49,7 +49,7 @@ var playlyfe = new Playlyfe(
 // This will take your client id and secret and use it to fetch the access token to make further requests.
 
 // To get infomation of a  player
-player = playlyfe.get(
+dynamic player = playlyfe.get(
   route: "/player",
   query: new Dictionary<string, string> () { {"player_id", "student1" }}
 );
@@ -57,13 +57,13 @@ Console.WriteLine(player["id"]);
 Console.WriteLine(player["alias"]);
 
 // To get all available processes
-processes = playlyfe.get(
+dynamic processes = playlyfe.get(
   route: "/processes",
   query: new Dictionary<string, string> () {{"player_id", "student1"}}
 )
 Console.WriteLine(processes["total"]);
 // To start a process
-process =  playlyfe.post(
+dynamic process =  playlyfe.post(
   route: "/definitions/processes/collect",
   query: new Dictionary<string, string> () { {"player_id", "student1"} },
   body: new { name = "My First Process" }
@@ -120,7 +120,7 @@ In development the sdk caches the access token in memory so you don"t need to pr
 
 **API**
 ```csharp
-JSONNode api(
+dynamic api(
     method: "GET" // The request method can be GET/POST/PUT/PATCH/DELETE
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
@@ -130,7 +130,7 @@ JSONNode api(
 
 **Get**
 ```csharp
-JSONNode get(
+dynamic get(
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
@@ -138,7 +138,7 @@ JSONNode get(
 ```
 **Post**
 ```csharp
-JSONNode post(
+dynamic post(
     route: "" // The api route to post data to
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to post to the api this will be automagically converted to json
@@ -146,7 +146,7 @@ JSONNode post(
 ```
 **Patch**
 ```csharp
-JSONNode patch(
+dynamic patch(
     route: "" // The api route to patch data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
@@ -154,7 +154,7 @@ JSONNode patch(
 ```
 **Put**
 ```csharp
-JSONNode put(
+dynamic put(
     route: "" // The api route to put data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
@@ -162,7 +162,7 @@ JSONNode put(
 ```
 **Delete**
 ```csharp
-JSONNode delete(
+dynamic delete(
     route: "" // The api route to delete the component
     query: Dictionary<string, string> // The query params that you want to send to the route
 )
@@ -186,7 +186,7 @@ A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Er
 
 License
 =======
-Playlyfe C# SDK v0.2.0  
+Playlyfe C# SDK v0.3.0  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
