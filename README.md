@@ -42,7 +42,7 @@ To get started initialize your client using client credentials flow and then sta
 var playlyfe = new Playlyfe(
     client_id: "Your client id",
     client_secret: "Your client secret",
-    type: "code",
+    type: "client",
     store: null,
     load: null
 );
