@@ -6,6 +6,19 @@ This is the official OAuth 2.0 C# client SDK for the Playlyfe API.
 It supports the `client_credentials` and `authorization code` OAuth 2.0 flows.
 For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe.com/docs/api.html) for more information.
 
+> Note: Breaking Changes this is the new version of the sdk which uses the Playlyfe api v2 by default if you still want to use the v1 api you can do that so by passing a version key in the options when creating a client with 'v1' as the value
+
+```csharp
+var playlyfe = new Playlyfe(
+    client_id: "Your client id",
+    client_secret: "Your client secret",
+    type: "code",
+    store: null,
+    load: null,
+    version: "v1"
+);
+```
+
 Requires
 --------
 .NET >= 4.0 or Mono >= 3.2.8
@@ -38,13 +51,15 @@ Using
 # Examples
 The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
 To get started initialize your client using client credentials flow and then start making requests
+**For v1 api**
 ```csharp
 var playlyfe = new Playlyfe(
     client_id: "Your client id",
     client_secret: "Your client secret",
     type: "client",
     store: null,
-    load: null
+    load: null,
+    version: "v1"
 );
 // This will take your client id and secret and use it to fetch the access token to make further requests.
 
@@ -88,7 +103,57 @@ catch(PlaylyfeException err) {
   Console.WriteLine (err.Message); // This route does not exist
 }
 ```
+**For v2 api**
+```csharp
+var playlyfe = new Playlyfe(
+    client_id: "Your client id",
+    client_secret: "Your client secret",
+    type: "code",
+    store: null,
+    load: null
+);
+// This will take your client id and secret and use it to fetch the access token to make further requests.
 
+// To get infomation of a  player
+dynamic player = playlyfe.get(
+  route: "/runtime/player",
+  query: new Dictionary<string, string> () { {"player_id", "student1" }}
+);
+Console.WriteLine(player["id"]);
+Console.WriteLine(player["alias"]);
+
+// To get all available processes
+dynamic processes = playlyfe.get(
+  route: "/runtime/processes",
+  query: new Dictionary<string, string> () {{"player_id", "student1"}}
+)
+Console.WriteLine(processes["total"]);
+// To start a process
+dynamic process =  playlyfe.post(
+  route: "/runtime/processes",
+  query: new Dictionary<string, string> () { {"player_id", "student1"} },
+  body: new { name = "My First Process", definition = "module1" }
+);
+
+//To play a process
+playlyfe.post(
+  route: "/runtime/processes/"+process_id+"/play",
+  query: new Dictionary<string, string> () { {"player_id", "johny"} },
+  body: new { trigger = trigger_name }
+);
+
+// A PLaylyfeException is thrown when an error from the playlyfe platform is returned on a request
+try {
+  playlyfe.get(
+    route: "/unkown",
+    query: new Dictionary<string, string>(){ {"player_id", "student1"}}
+  );
+}
+catch(PlaylyfeException err) {
+  Console.WriteLine (err.Name); // route_not_found
+  Console.WriteLine (err.Message); // This route does not exist
+}
+```
 # Examples for [Nancy Framework](http://nancyfx.org/)
 ## 1. Client Credentials Flow
 A typical nancy app using client credentials code flow with a single route would look something like this
@@ -104,7 +169,8 @@ A typical nancy app using client credentials code flow with a single route would
                     client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
                     type: "client",
                     store: null,
-                    load: null
+                    load: null,
+                    version: "v1"
                 );
             Get["/client"] = parameters => {
                 dynamic players = plClient.get(route: "/game/players", query: null);
@@ -150,7 +216,8 @@ routes.
                     type: "code",
                     redirect_uri: "http://localhost:3000/code",
                     store: null,
-                    load: null
+                    load: null,
+                    version: "v1"
                 );
             Get ["/code"] = parameters => {
                 var dict = (DynamicDictionary) this.Request.Query;
@@ -281,7 +348,7 @@ Contributors
 
 License
 =======
-Playlyfe C# SDK v0.3.1  
+Playlyfe C# SDK v0.4.0  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 

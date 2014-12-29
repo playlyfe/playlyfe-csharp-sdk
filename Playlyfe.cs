@@ -25,9 +25,11 @@ using System.Web;
 		private Func<Dictionary<string, string>> load;
 		private	RestClient apiClient;
 
-		public Playlyfe(String client_id, String client_secret, String type, Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load, string redirect_uri="")
+	public Playlyfe(String client_id, String client_secret, String type, 
+		Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load, 
+		string redirect_uri="", string version = "v2")
 		{
-			apiClient = new RestClient("https://api.playlyfe.com/v1");
+			apiClient = new RestClient("https://api.playlyfe.com/"+version);
 			this.client_id = client_id;
 			this.client_secret = client_secret;
 			this.type = type;

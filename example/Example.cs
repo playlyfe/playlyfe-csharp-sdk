@@ -18,7 +18,8 @@ namespace example
 					client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 					type: "client",
 					store: null,
-					load: null
+					load: null,
+					version: "v1"
 				);
 			if(plCode == null)
 				plCode = new Playlyfe(
@@ -27,9 +28,10 @@ namespace example
 					type: "code",
 					redirect_uri: "http://localhost:3000/code",
 					store: null,
-					load: null
+					load: null,
+					version: "v1"
 				);
-				
+
 			Get["/"] = parameters => {
 				var html = "<html><head><title>Playlyfe Examples</title></head><body>";
 				html += "<h1><a href=\"/client\">Client Credentials Flow Example</a></h1>";

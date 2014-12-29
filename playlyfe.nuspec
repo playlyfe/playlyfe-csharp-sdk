@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>playlyfe</id>
-    <version>0.3.1</version>
+    <version>0.4.0</version>
     <title>Playlyfe C# SDK</title>
     <authors>playlyfe</authors>
     <owners>playlyfe</owners>
