@@ -148,6 +148,53 @@ namespace Test
 			dynamic players = pl.get(route: "/game/players", query: player_id);
 			Assert.IsNotNull(players);
 		}
+
+		[Test]
+		public void StoreAndLoad()
+		{
+			Dictionary<string, string> tok = null;
+			var pl = new Playlyfe (
+				client_id: "N2Y4NjNlYTItODQzZi00YTQ0LTkzZWEtYTBiNTA2ODg3MDU4",
+				client_secret: "NDc3NTA0NmItMjBkZi00MjI2LWFhMjUtOTI0N2I1YTkxYjc2M2U3ZGI0MDAtNGQ1Mi0xMWU0LWJmZmUtMzkyZTdiOTYxYmMx",
+				type: "client",
+				store: token => 
+				{
+					Console.WriteLine("hello", token);
+					tok = new Dictionary<string, string>();
+					tok["access_token"] = token["access_token"];
+					tok["expires_at"] = token["expires_at"];
+					return 0;
+				},
+				load: () => 
+				{
+					return tok;
+				},
+				version: "v1"
+			);
+			dynamic players = pl.get(route: "/game/players", query: player_id);
+			pl.get(route: "/game/players", query: player_id);
+			pl.get(route: "/game/players", query: player_id);
+			var pl2 = new Playlyfe (
+				client_id: "N2Y4NjNlYTItODQzZi00YTQ0LTkzZWEtYTBiNTA2ODg3MDU4",
+				client_secret: "NDc3NTA0NmItMjBkZi00MjI2LWFhMjUtOTI0N2I1YTkxYjc2M2U3ZGI0MDAtNGQ1Mi0xMWU0LWJmZmUtMzkyZTdiOTYxYmMx",
+				type: "client",
+				store: token => 
+				{
+					Console.WriteLine("hello", token);
+					tok = new Dictionary<string, string>();
+					tok["access_token"] = token["access_token"];
+					tok["expires_at"] = token["expires_at"];
+					return 0;
+				},
+				load: () => 
+				{
+					return tok;
+				},
+				version: "v1"
+			);
+			pl2.get(route: "/game/players", query: player_id);
+			pl2.get(route: "/game/players", query: player_id);
+		}
 	}
 }
 

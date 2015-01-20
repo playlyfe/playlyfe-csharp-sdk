@@ -37,11 +37,14 @@ using System.Web;
 				store = token => { Console.WriteLine("Storing Token");return 0;};
 			}
 			this.store = store;
+			if (load != null) {
+				var token = load.Invoke ();
+				if (token == null) {
+					get_access_token ();
+				}
+			}
 			this.load = load;
 			this.redirect_uri = redirect_uri;
-			if (type == "client") {
-				get_access_token ();
-			}
 		}
 
 		private void get_access_token()
@@ -71,7 +74,7 @@ using System.Web;
 			response.Data.Remove ("expires_in");
 			store.Invoke (response.Data);
 			if (load == null) {
-				load =  delegate { return response.Data;};
+				load = delegate { return response.Data;};
 			}
 		}
 
