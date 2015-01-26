@@ -1,19 +1,20 @@
 ﻿using System;
 using Nancy;
+using Playlyfe;
 
 namespace example
 {
 	public class Client : NancyModule
 	{
-		public static Playlyfe plClient = null;
-		public static Playlyfe plCode = null;
+		public static Playlyfe.Playlyfe plClient = null;
+		public static Playlyfe.Playlyfe plCode = null;
 		public static string user = null;
 
 		public Client ()
 		{
 			StaticConfiguration.DisableErrorTraces = false;
 			if (plClient == null)
-				plClient = new Playlyfe (
+				plClient = new Playlyfe.Playlyfe (
 					client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 					client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 					type: "client",
@@ -22,7 +23,7 @@ namespace example
 					version: "v1"
 				);
 			if(plCode == null)
-				plCode = new Playlyfe(
+				plCode = new Playlyfe.Playlyfe(
 					client_id: "OGUxYTRlZWUtZTAyOS00ZThjLWIyNzQtNGEwMGRiNjk1ZGRj",
 					client_secret: "NDMyMDMyOTktM2NhOS00MGJlLTg4NzYtZWJjMzNhNTE1NDYwYTc1NGU2NTAtNWI1ZS0xMWU0LTkwYTEtYTM4MzkzMzkxZTY1",
 					type: "code",

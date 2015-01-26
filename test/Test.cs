@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Playlyfe;
 
 namespace Test
 {
@@ -12,7 +13,7 @@ namespace Test
 		[Test]
 		public void Error()
 		{
-			var pl = new Playlyfe(
+			var pl = new Playlyfe.Playlyfe(
 				client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 				client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 				type: "client",
@@ -25,7 +26,7 @@ namespace Test
 					query: player_id
 				);
 			}
-			catch(PlaylyfeException ex) {
+			catch(Playlyfe.PlaylyfeException ex) {
 				Assert.AreEqual(ex.Name, "route_not_found");
 				Assert.AreEqual(ex.Message, "This route does not exist");
 			}
@@ -34,7 +35,7 @@ namespace Test
 		[Test]
 		public void v1API()
 		{
-			var pl = new Playlyfe(
+			var pl = new Playlyfe.Playlyfe(
 				client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 				client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 				type: "client",
@@ -59,7 +60,7 @@ namespace Test
 
 			dynamic player = pl.get(route: "/player", query: player_id,raw: true);
 			Assert.IsInstanceOf<String>(player);
-				
+
 			pl.get (route: "/definitions/processes", query: player_id);
 			pl.get (route:  "/definitions/teams", query:  player_id);
 			pl.get (route:  "/processes", query:  player_id);
@@ -87,7 +88,7 @@ namespace Test
 		[Test]
 		public void v2API()
 		{
-			var pl = new Playlyfe(
+			var pl = new Playlyfe.Playlyfe(
 				client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 				client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 				type: "client",
@@ -137,7 +138,7 @@ namespace Test
 		[Test]
 		public void APIProduction()
 		{
-			var pl = new Playlyfe (
+			var pl = new Playlyfe.Playlyfe (
 			      client_id: "N2Y4NjNlYTItODQzZi00YTQ0LTkzZWEtYTBiNTA2ODg3MDU4",
 			      client_secret: "NDc3NTA0NmItMjBkZi00MjI2LWFhMjUtOTI0N2I1YTkxYjc2M2U3ZGI0MDAtNGQ1Mi0xMWU0LWJmZmUtMzkyZTdiOTYxYmMx",
 				  type: "client",
@@ -153,11 +154,11 @@ namespace Test
 		public void StoreAndLoad()
 		{
 			Dictionary<string, string> tok = null;
-			var pl = new Playlyfe (
+			var pl = new Playlyfe.Playlyfe (
 				client_id: "N2Y4NjNlYTItODQzZi00YTQ0LTkzZWEtYTBiNTA2ODg3MDU4",
 				client_secret: "NDc3NTA0NmItMjBkZi00MjI2LWFhMjUtOTI0N2I1YTkxYjc2M2U3ZGI0MDAtNGQ1Mi0xMWU0LWJmZmUtMzkyZTdiOTYxYmMx",
 				type: "client",
-				store: token => 
+				store: token =>
 				{
 					Console.WriteLine("hello", token);
 					tok = new Dictionary<string, string>();
@@ -165,7 +166,7 @@ namespace Test
 					tok["expires_at"] = token["expires_at"];
 					return 0;
 				},
-				load: () => 
+				load: () =>
 				{
 					return tok;
 				},
@@ -174,11 +175,11 @@ namespace Test
 			dynamic players = pl.get(route: "/game/players", query: player_id);
 			pl.get(route: "/game/players", query: player_id);
 			pl.get(route: "/game/players", query: player_id);
-			var pl2 = new Playlyfe (
+			var pl2 = new Playlyfe.Playlyfe (
 				client_id: "N2Y4NjNlYTItODQzZi00YTQ0LTkzZWEtYTBiNTA2ODg3MDU4",
 				client_secret: "NDc3NTA0NmItMjBkZi00MjI2LWFhMjUtOTI0N2I1YTkxYjc2M2U3ZGI0MDAtNGQ1Mi0xMWU0LWJmZmUtMzkyZTdiOTYxYmMx",
 				type: "client",
-				store: token => 
+				store: token =>
 				{
 					Console.WriteLine("hello", token);
 					tok = new Dictionary<string, string>();
@@ -186,7 +187,7 @@ namespace Test
 					tok["expires_at"] = token["expires_at"];
 					return 0;
 				},
-				load: () => 
+				load: () =>
 				{
 					return tok;
 				},

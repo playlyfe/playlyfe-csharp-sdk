@@ -41,15 +41,16 @@ namespace Playlyfe
                 store = token => { Console.WriteLine("Storing Token"); return 0; };
             }
             this.store = store;
-            if (load != null)
-            {
-                var token = load.Invoke();
-                if (token == null)
-                {
-                    get_access_token();
-                }
-            }
-            this.load = load;
+			if (load != null) {
+				this.load = load;
+				var token = load.Invoke ();
+				if (token == null) {
+					get_access_token ();
+				}
+			}
+			else {
+				get_access_token ();
+			}
             this.redirect_uri = redirect_uri;
         }
 
