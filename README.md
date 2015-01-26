@@ -348,7 +348,7 @@ Contributors
 
 License
 =======
-Playlyfe C# SDK v0.4.1  
+Playlyfe C# SDK v0.4.2  
 http://dev.playlyfe.com/  
 Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
