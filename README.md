@@ -242,6 +242,18 @@ routes.
         }
     }
 ```
+## 3. Custom Login Flow using JWT(JSON Web Token)
+```java
+using Playlyfe;
+String[] scopes = { "player.runtime.read", "player.runtime.write" };
+String token = Playlyfe.Playlyfe.createJWT ("your client_id", "your client_secret", 
+    "student1",// The player id associated with your user
+    scopes, // The scopes the player has access to
+    3600 // 1 hour expiry Time
+);
+```
+This is used to create jwt token which can be created when your user is authenticated. This token can then be sent to the frontend and or stored in your session. With this token the user can directly send requests to the Playlyfe API as the player.
+
 # Documentation
 You can initiate a client by giving the client_id and client_secret params
 ```csharp
@@ -348,9 +360,9 @@ Contributors
 
 License
 =======
-Playlyfe C# SDK v0.4.2  
+Playlyfe C# SDK v0.5.0  
 http://dev.playlyfe.com/  
-Copyright(c) 2013-2014, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
+Copyright(c) 2014-2015, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
