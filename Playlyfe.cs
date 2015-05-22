@@ -3,6 +3,7 @@ using RestSharp;
 using System.Collections.Generic;
 using System.Collections;
 using System.Web;
+using JWT;
 
 namespace Playlyfe
 {
@@ -27,6 +28,20 @@ namespace Playlyfe
         private Func<Dictionary<string, string>, int> store;
         private Func<Dictionary<string, string>> load;
         private RestClient apiClient;
+
+		public static String createJWT(String client_id, String client_secret, String player_id, String[] scopes, int expires) {
+			var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+			var now = Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds) + expires;
+			var payload = new Dictionary<string, object>()
+			{
+				{ "player_id", player_id },
+				{ "scopes", scopes },
+				{ "exp", now }
+			};
+			string token = JWT.JsonWebToken.Encode(payload, client_secret, JWT.JwtHashAlgorithm.HS256);
+			token = client_id + ':' + token;
+			return token;
+		}
 
         public Playlyfe(String client_id, String client_secret, String type,
             Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load,

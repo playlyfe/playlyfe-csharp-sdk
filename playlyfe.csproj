@@ -31,7 +31,10 @@
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RestSharp">
-      <HintPath>packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+      <HintPath>packages\RestSharp.105.1.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="JWT">
+      <HintPath>packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

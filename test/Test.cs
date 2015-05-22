@@ -196,6 +196,19 @@ namespace Test
 			pl2.get(route: "/game/players", query: player_id);
 			pl2.get(route: "/game/players", query: player_id);
 		}
+
+		[Test]
+		public void CreateJWT() {
+			String[] scopes = { "player.runtime.read", "player.runtime.write" };
+			String token = Playlyfe.Playlyfe.createJWT (
+				"MWYwZGYzNTYtZGIxNy00OGM5LWExZGMtZjBjYTFiN2QxMTlh",
+				"NmM2YTcxOGYtNGE2ZC00ZDdhLTkyODQtYTIwZTE4ZDc5YWNjNWFiNzBiYjAtZmZiMC0xMWU0LTg5YzctYzc5NWNiNzA1Y2E4",
+				"student1",
+				scopes,
+				30
+			);
+			Console.WriteLine (token);
+		}
 	}
 }
 
