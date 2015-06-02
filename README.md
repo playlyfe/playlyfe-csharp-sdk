@@ -1,4 +1,4 @@
-![Playlyfe C# SDK](./images/pl-csharp-sdk.png "Playlyfe C# SDK")
+![Playlyfe C# SDK](https://dev.playlyfe.com/images/assets/pl-csharp-sdk.png "Playlyfe C# SDK")
 
 Playlyfe C# SDK[![NuGet version](https://badge.fury.io/nu/playlyfe.svg)](http://badge.fury.io/nu/playlyfe)
 =================
@@ -7,46 +7,6 @@ It supports the `client_credentials` and `authorization code` OAuth 2.0 flows.
 For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe.com/docs/api.html) for more information.
 
 > Note: Breaking Changes this is the new version of the sdk which uses the Playlyfe api v2 by default if you still want to use the v1 api you can do that so by passing a version key in the options when creating a client with 'v1' as the value
-
-```csharp
-var playlyfe = new Playlyfe(
-    client_id: "Your client id",
-    client_secret: "Your client secret",
-    type: "code",
-    store: null,
-    load: null,
-    version: "v1"
-);
-```
-
-Requires
---------
-.NET >= 4.0 or Mono >= 3.2.8
-
-Install
-----------
-You can direcly download the `playlyfe.dll` file and reference it in your project
-or if you are using nuget
-```csharp
-nuget install playlyfe
-```
-
-Using
------
-### Create a client
-  If you haven't created a client for your game yet just head over to [Playlyfe](http://playlyfe.com) and login into your account, and go to the game settings and click on client
-
-  **1.Client Credentials Flow**
-    In the client page click on whitelabel client
-    ![Creating a Whitelabel Client](./images/client.png "Creating a Whitelabel Client")
-
-  **2.Authorization Code Flow**
-    In the client page click on backend client and specify the redirect uri this will be the url where you will be redirected to get the token
-    ![Creating a Backend Client](./images/auth.png "Creating a Backend Client")
-
-> Note: If you want to test the sdk in staging you can click the Test Client button.
-
-  And then note down the client id and client secret you will need it later for using it in the sdk
 
 # Examples
 The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
@@ -154,8 +114,27 @@ catch(PlaylyfeException err) {
   Console.WriteLine (err.Message); // This route does not exist
 }
 ```
-# Examples for [Nancy Framework](http://nancyfx.org/)
-## 1. Client Credentials Flow
+Requires
+--------
+.NET >= 4.0 or Mono >= 3.2.8
+
+Install
+----------
+You can direcly download the `playlyfe.dll` file and reference it in your project
+or if you are using nuget
+```csharp
+nuget install playlyfe
+```
+
+Using
+-----
+### Create a client
+  If you haven't created a client for your game yet just head over to [Playlyfe](http://playlyfe.com) and login into your account, and go to the game settings and click on client.
+
+### 1. Client Credentials Flow [Nancy Framework](http://nancyfx.org/)
+In the client page select Yes for both the first and second questions
+![client](https://cloud.githubusercontent.com/assets/1687946/7930229/2c2f14fe-0924-11e5-8c3b-5ba0c10f066f.png)
+
 A typical nancy app using client credentials code flow with a single route would look something like this
 ```csharp
     public class Client : NancyModule
@@ -193,6 +172,9 @@ A typical nancy app using client credentials code flow with a single route would
     }
 ```
 ## 2. Authorization Code Flow
+In the client page select yes for the first question and no for the second
+![auth](https://cloud.githubusercontent.com/assets/1687946/7930231/2c31c1fe-0924-11e5-8cb5-73ca0a002bcb.png)
+
 In this flow you will have a route which will get the authorization code and using this the sdk can get the access token. You need a view which will allow your user to login using the playlyfe platform. And then playlyfe server will make a get request with the code to your redirect uri. And you should find the code in the query params of the url and exchange the code with the Playlyfe SDK.
 ```csharp
 exchange_code(code)
@@ -243,7 +225,9 @@ routes.
     }
 ```
 ## 3. Custom Login Flow using JWT(JSON Web Token)
-```java
+In the client page select no for the first question and yes for the second
+![jwt](https://cloud.githubusercontent.com/assets/1687946/7930230/2c2f2caa-0924-11e5-8dcf-aed914a9dd58.png)
+```csharp
 using Playlyfe;
 String[] scopes = { "player.runtime.read", "player.runtime.write" };
 String token = Playlyfe.Playlyfe.createJWT ("your client_id", "your client_secret", 
