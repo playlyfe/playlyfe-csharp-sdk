@@ -11,59 +11,6 @@ For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe
 # Examples
 The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
 To get started initialize your client using client credentials flow and then start making requests
-**For v1 api**
-```csharp
-var playlyfe = new Playlyfe(
-    client_id: "Your client id",
-    client_secret: "Your client secret",
-    type: "client",
-    store: null,
-    load: null,
-    version: "v1"
-);
-// This will take your client id and secret and use it to fetch the access token to make further requests.
-
-// To get infomation of a  player
-dynamic player = playlyfe.get(
-  route: "/player",
-  query: new Dictionary<string, string> () { {"player_id", "student1" }}
-);
-Console.WriteLine(player["id"]);
-Console.WriteLine(player["alias"]);
-
-// To get all available processes
-List<dynamic> processes = playlyfe.get(
-  route: "/processes",
-  query: new Dictionary<string, string> () {{"player_id", "student1"}},
-  list: true
-)
-Console.WriteLine(processes["total"]);
-// To start a process
-dynamic process =  playlyfe.post(
-  route: "/definitions/processes/collect",
-  query: new Dictionary<string, string> () { {"player_id", "student1"} },
-  body: new { name = "My First Process" }
-);
-
-//To play a process
-playlyfe.post(
-  route: "/processes/"+process_id+"/play",
-  query: new Dictionary<string, string> () { {"player_id", "johny"} },
-  body: new { trigger = trigger_name }
-);
-
-// A PLaylyfeException is thrown when an error from the playlyfe platform is returned on a request
-try {
-  playlyfe.get(
-    route: "/unkown",
-    query: new Dictionary<string, string>(){ {"player_id", "student1"}}
-  );
-}
-catch(PlaylyfeException err) {
-  Console.WriteLine (err.Name); // route_not_found
-  Console.WriteLine (err.Message); // This route does not exist
-}
-```
 **For v2 api**
 ```csharp
 var playlyfe = new Playlyfe(
@@ -71,23 +18,27 @@ var playlyfe = new Playlyfe(
     client_secret: "Your client secret",
     type: "code",
     store: null,
-    load: null
+    load: null,
+    version: "v2",
 );
-// This will take your client id and secret and use it to fetch the access token to make further requests.
+// This will take your client id and secret and use it to fetch the 
+// access token to make further requests.
 
 // To get infomation of a  player
-List<dynamic> player = playlyfe.get(
+dynamic player = playlyfe.get(
   route: "/runtime/player",
-  query: new Dictionary<string, string> () { {"player_id", "student1" }},
-  list: true
+  query: new Dictionary<string, string> () { {"player_id", "student1" }}
 );
 Console.WriteLine(player["id"]);
 Console.WriteLine(player["alias"]);
 
 // To get all available processes
-dynamic processes = playlyfe.get(
+// Note if the response is an array then you need to pass list as true
+// and the result will be a List of dynamics
+List<dynamic> processes = playlyfe.get(
   route: "/runtime/processes",
-  query: new Dictionary<string, string> () {{"player_id", "student1"}}
+  query: new Dictionary<string, string> () {{"player_id", "student1"}},
+  list: true
 )
 Console.WriteLine(processes["total"]);
 // To start a process
@@ -283,11 +234,13 @@ api(
 
 **Get**
 ```csharp
-dynamic get(
+dynamic or List<dynamic>
+get(
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
-    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
+    list: false // When the response is an array then you need to pass this as true 
+    //for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Post**
@@ -296,7 +249,8 @@ dynamic post(
     route: "" // The api route to post data to
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to post to the api this will be automagically converted to json
-    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
+    list: false // When the response is an array then you need to pass this as true 
+    //for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Patch**
@@ -305,7 +259,8 @@ dynamic patch(
     route: "" // The api route to patch data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
-    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
+    list: false // When the response is an array then you need to pass this as true
+    //for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Put**
@@ -314,7 +269,8 @@ dynamic put(
     route: "" // The api route to put data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
-    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
+    list: false // When the response is an array then you need to pass this as true
+    //for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Delete**
@@ -322,7 +278,8 @@ dynamic put(
 dynamic delete(
     route: "" // The api route to delete the component
     query: Dictionary<string, string> // The query params that you want to send to the route
-    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
+    list: false // When the response is an array then you need to pass this as true
+    //for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Get Login Url**
