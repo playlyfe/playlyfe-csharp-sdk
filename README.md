@@ -32,9 +32,10 @@ Console.WriteLine(player["id"]);
 Console.WriteLine(player["alias"]);
 
 // To get all available processes
-dynamic processes = playlyfe.get(
+List<dynamic> processes = playlyfe.get(
   route: "/processes",
-  query: new Dictionary<string, string> () {{"player_id", "student1"}}
+  query: new Dictionary<string, string> () {{"player_id", "student1"}},
+  list: true
 )
 Console.WriteLine(processes["total"]);
 // To start a process
@@ -75,9 +76,10 @@ var playlyfe = new Playlyfe(
 // This will take your client id and secret and use it to fetch the access token to make further requests.
 
 // To get infomation of a  player
-dynamic player = playlyfe.get(
+List<dynamic> player = playlyfe.get(
   route: "/runtime/player",
-  query: new Dictionary<string, string> () { {"player_id", "student1" }}
+  query: new Dictionary<string, string> () { {"player_id", "student1" }},
+  list: true
 );
 Console.WriteLine(player["id"]);
 Console.WriteLine(player["alias"]);
@@ -269,11 +271,13 @@ In development the sdk caches the access token in memory so you don"t need to pr
 
 **API**
 ```csharp
-dynamic api(
+dynamic or List<dynamic>
+api(
     method: "GET" // The request method can be GET/POST/PUT/PATCH/DELETE
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 
@@ -283,6 +287,7 @@ dynamic get(
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Post**
@@ -291,6 +296,7 @@ dynamic post(
     route: "" // The api route to post data to
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to post to the api this will be automagically converted to json
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Patch**
@@ -299,6 +305,7 @@ dynamic patch(
     route: "" // The api route to patch data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Put**
@@ -307,6 +314,7 @@ dynamic put(
     route: "" // The api route to put data
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to update in the api this will be automagically converted to json
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Delete**
@@ -314,6 +322,7 @@ dynamic put(
 dynamic delete(
     route: "" // The api route to delete the component
     query: Dictionary<string, string> // The query params that you want to send to the route
+    list: false // When the response is an array then you need to pass this as true for proper deserialization and the result will be List<dynamic>
 )
 ```
 **Get Login Url**
@@ -344,7 +353,7 @@ Contributors
 
 License
 =======
-Playlyfe C# SDK v0.5.0  
+Playlyfe C# SDK v0.5.1  
 http://dev.playlyfe.com/  
 Copyright(c) 2014-2015, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 

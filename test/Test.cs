@@ -111,6 +111,9 @@ namespace Test
 			dynamic player = pl.get(route: "/runtime/player", query: player_id,raw: true);
 			Assert.IsInstanceOf<String>(player);
 
+			List<dynamic> actions = pl.get(route: "/runtime/actions", query: player_id, list: true);	
+			Assert.IsNotNullOrEmpty (actions[0]["id"]);
+
 			pl.get (route: "/runtime/definitions/processes", query: player_id);
 			pl.get (route:  "/runtime/definitions/teams", query:  player_id);
 			pl.get (route:  "/runtime/processes", query:  player_id);

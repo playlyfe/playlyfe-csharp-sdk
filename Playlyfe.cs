@@ -101,7 +101,7 @@ namespace Playlyfe
             }
         }
 
-        public dynamic api(String method, String route, Dictionary<string, string> query, object body = null, bool raw = false)
+		public dynamic api(String method, String route, Dictionary<string, string> query, object body = null, bool raw = false, bool list = false)
         {
             var token = load.Invoke();
             TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
@@ -161,39 +161,38 @@ namespace Playlyfe
                 dynamic error = SimpleJson.DeserializeObject<object>(response.Content);
                 throw new PlaylyfeException(error["error"], error["error_description"]);
             }
-            if (raw == true)
-            {
-                return response.Content;
-            }
-            else
-            {
-                return SimpleJson.DeserializeObject<dynamic>(response.Content);
-            }
+			if (raw == true) {
+				return response.Content;
+			} else if (list == true) {
+				return SimpleJson.DeserializeObject<List<dynamic>> (response.Content);
+			} else {
+				return SimpleJson.DeserializeObject<dynamic> (response.Content);
+			}
         }
 
-        public dynamic get(String route, Dictionary<string, string> query, bool raw = false)
+        public dynamic get(String route, Dictionary<string, string> query, bool raw = false, bool list = false)
         {
-            return api("GET", route, query, new { }, raw);
+            return api("GET", route, query, new { }, raw, list);
         }
 
-        public dynamic post(string route, Dictionary<string, string> query, object body)
+		public dynamic post(string route, Dictionary<string, string> query, object body, bool list = false)
         {
-            return api("POST", route, query, body);
+            return api("POST", route, query, body, list);
         }
 
-        public dynamic put(string route, Dictionary<string, string> query, object body)
+		public dynamic put(string route, Dictionary<string, string> query, object body, bool list = false)
         {
-            return api("PUT", route, query, body);
+            return api("PUT", route, query, body, list);
         }
 
-        public dynamic patch(string route, Dictionary<string, string> query, object body)
+		public dynamic patch(string route, Dictionary<string, string> query, object body, bool list = false)
         {
-            return api("PATCH", route, query, body);
+            return api("PATCH", route, query, body, list);
         }
 
-        public dynamic delete(string route, Dictionary<string, string> query)
+		public dynamic delete(string route, Dictionary<string, string> query, bool list = false)
         {
-            return api("DELETE", route, query, new { });
+            return api("DELETE", route, query, new { }, list);
         }
 
         public string get_login_url()
