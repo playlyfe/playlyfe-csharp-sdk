@@ -360,7 +360,7 @@ Contributors
 
 License
 =======
-Playlyfe C# SDK v0.5.1  
+Playlyfe C# SDK  
 http://dev.playlyfe.com/  
 Copyright(c) 2014-2015, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
