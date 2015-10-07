@@ -36,8 +36,8 @@ namespace Test
 		public void v1API()
 		{
 			var pl = new Playlyfe.Playlyfe(
-				client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
-				client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
+				client_id: "Zjk2NTQ5MzQtNTg0NC00NTVmLTkwNjItOGM5NmRmYTQ3MDc4",
+				client_secret: "ZGI0YzE0M2EtNjA5Mi00MzA4LWEyNDEtODExZDEyYWYyN2VhYzgxZGM1NTAtNjVhZC0xMWU1LWJhMDMtY2JjODczZTg4YWEy",
 				type: "client",
 				store: null,
 				load: null,
@@ -204,11 +204,11 @@ namespace Test
 		public void CreateJWT() {
 			String[] scopes = { "player.runtime.read", "player.runtime.write" };
 			String token = Playlyfe.Playlyfe.createJWT (
-				"MWYwZGYzNTYtZGIxNy00OGM5LWExZGMtZjBjYTFiN2QxMTlh",
-				"NmM2YTcxOGYtNGE2ZC00ZDdhLTkyODQtYTIwZTE4ZDc5YWNjNWFiNzBiYjAtZmZiMC0xMWU0LTg5YzctYzc5NWNiNzA1Y2E4",
+				"NDgyM2RkZWUtYTdiYi00Njg5LWJlZGEtODA4OWY1MTZkYWEx",
+				"MzdlZjdmNTAtYjg5Ni00NmVhLWE5NzAtMGFkYTE0ZjRjYzY1MDZiNjQ3NjAtNmMyZi0xMWU1LTg4YzctMzlhNGYwZTRhODNh",
 				"student1",
 				scopes,
-				30
+				3600
 			);
 			Console.WriteLine (token);
 		}

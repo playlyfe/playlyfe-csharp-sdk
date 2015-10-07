@@ -8,6 +8,7 @@ namespace example
 	{
 		public static Playlyfe.Playlyfe plClient = null;
 		public static Playlyfe.Playlyfe plCode = null;
+		public static Playlyfe.Playlyfe plJWT = null;
 		public static string user = null;
 
 		public Client ()
@@ -18,16 +19,6 @@ namespace example
 					client_id: "Zjc0MWU0N2MtODkzNS00ZWNmLWEwNmYtY2M1MGMxNGQ1YmQ4",
 					client_secret: "YzllYTE5NDQtNDMwMC00YTdkLWFiM2MtNTg0Y2ZkOThjYTZkMGIyNWVlNDAtNGJiMC0xMWU0LWI2NGEtYjlmMmFkYTdjOTI3",
 					type: "client",
-					store: null,
-					load: null,
-					version: "v1"
-				);
-			if(plCode == null)
-				plCode = new Playlyfe.Playlyfe(
-					client_id: "OGUxYTRlZWUtZTAyOS00ZThjLWIyNzQtNGEwMGRiNjk1ZGRj",
-					client_secret: "NDMyMDMyOTktM2NhOS00MGJlLTg4NzYtZWJjMzNhNTE1NDYwYTc1NGU2NTAtNWI1ZS0xMWU0LTkwYTEtYTM4MzkzMzkxZTY1",
-					type: "code",
-					redirect_uri: "http://localhost:3000/code",
 					store: null,
 					load: null,
 					version: "v1"
@@ -47,6 +38,16 @@ namespace example
 			};
 
 			Get ["/code"] = parameters => {
+			   if(plCode == null)
+					plCode = new Playlyfe.Playlyfe(
+						client_id: "OGUxYTRlZWUtZTAyOS00ZThjLWIyNzQtNGEwMGRiNjk1ZGRj",
+						client_secret: "NDMyMDMyOTktM2NhOS00MGJlLTg4NzYtZWJjMzNhNTE1NDYwYTc1NGU2NTAtNWI1ZS0xMWU0LTkwYTEtYTM4MzkzMzkxZTY1",
+						type: "code",
+						redirect_uri: "http://localhost:3000/code",
+						store: null,
+						load: null,
+						version: "v1"
+					);
 				var dict = (DynamicDictionary) this.Request.Query;
 				if(dict.ContainsKey("code")) {
 					plCode.exchange_code(dict["code"].ToString());
@@ -62,7 +63,18 @@ namespace example
 				}
 			};
 
-			Get ["/logout"] = parameters => {
+			Get ["/JWT_TOKEN"] = parameter => {
+				String[] scopes = { "player.runtime.read", "player.runtime.write" };
+				return Playlyfe.Playlyfe.createJWT (
+					"NDgyM2RkZWUtYTdiYi00Njg5LWJlZGEtODA4OWY1MTZkYWEx",
+					"MzdlZjdmNTAtYjg5Ni00NmVhLWE5NzAtMGFkYTE0ZjRjYzY1MDZiNjQ3NjAtNmMyZi0xMWU1LTg4YzctMzlhNGYwZTRhODNh",
+					"student1",
+					scopes,
+					3600
+				);
+			};
+
+			Get ["/logout"]= parameters => {
 				user = null;
 				return "logged_out";
 			};

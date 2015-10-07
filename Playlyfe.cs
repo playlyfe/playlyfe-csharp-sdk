@@ -3,6 +3,7 @@ using RestSharp;
 using System.Collections.Generic;
 using System.Collections;
 using System.Web;
+using System.Net;
 using JWT;
 
 namespace Playlyfe
@@ -43,10 +44,23 @@ namespace Playlyfe
 			return token;
 		}
 
+		public void getJWTToken(String url) {
+			var client = new RestClient(url);
+			var request = new RestRequest("", Method.GET);
+			var response = client.Execute (request);
+			if (load == null) {
+				load = delegate {
+					return new Dictionary<string, string> (){ { "jwt_token", response.Content } };
+				};
+			}
+		}
+
         public Playlyfe(String client_id, String client_secret, String type,
             Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load,
             string redirect_uri = "", string version = "v2")
         {
+			ServicePointManager.Expect100Continue = true;
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             apiClient = new RestClient("https://api.playlyfe.com/" + version);
             this.client_id = client_id;
             this.client_secret = client_secret;
@@ -64,7 +78,8 @@ namespace Playlyfe
 				}
 			}
 			else {
-				get_access_token ();
+				if (type != "jwt")
+				 get_access_token ();
 			}
             this.redirect_uri = redirect_uri;
         }
@@ -86,6 +101,7 @@ namespace Playlyfe
                 request.AddParameter("code", code);
             }
             var response = client.Execute<Dictionary<string, string>>(request);
+			// Console.WriteLine (response.Content);
             if (response.Content.Contains("error") && response.Content.Contains("error_description"))
             {
                 throw new PlaylyfeException(response.Data["error"], response.Data["error_description"]);
@@ -102,15 +118,7 @@ namespace Playlyfe
         }
 
 		public dynamic api(String method, String route, Dictionary<string, string> query, object body = null, bool raw = false, bool list = false)
-        {
-            var token = load.Invoke();
-            TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
-            double now = timeSpan.TotalSeconds;
-            if (now >= Double.Parse(token["expires_at"]))
-            {
-                get_access_token();
-                token = load.Invoke();
-            }
+        {   
             Method reqMethod = Method.GET;
             bool hasBody = false;
             switch (method.ToUpper())
@@ -139,7 +147,20 @@ namespace Playlyfe
             }
             var request = new RestRequest(route, reqMethod);
             request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("access_token", token["access_token"], ParameterType.QueryString);
+			if (type != "jwt") {
+				var token = load.Invoke ();
+				TimeSpan timeSpan = DateTime.UtcNow - new DateTime (1970, 1, 1, 0, 0, 0);
+				double now = timeSpan.TotalSeconds;
+				if (now >= Double.Parse (token ["expires_at"])) {
+					get_access_token ();
+					token = load.Invoke ();
+				}
+				request.AddParameter ("access_token", token ["access_token"], ParameterType.QueryString);
+			} else {
+				var token = load.Invoke ();
+				request.AddParameter("jwt", token["jwt_token"], ParameterType.QueryString);
+			}
+            
             request.RequestFormat = DataFormat.Json;
             if (query != null)
             {
@@ -156,6 +177,7 @@ namespace Playlyfe
                 }
             }
             var response = apiClient.Execute(request);
+			// Console.WriteLine (response.ErrorException);
             if (response.Content.Contains("error") && response.Content.Contains("error_description"))
             {
                 dynamic error = SimpleJson.DeserializeObject<object>(response.Content);
