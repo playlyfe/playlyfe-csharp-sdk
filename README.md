@@ -144,8 +144,9 @@ routes.
         public static string user = null;
         public Client ()
         {
-            if(plCode == null)
-                plCode = new Playlyfe(
+            Get ["/code"] = parameters => {
+               if(plCode == null)
+                  plCode = new Playlyfe(
                     client_id: "OGUxYTRlZWUtZTAyOS00ZThjLWIyNzQtNGEwMGRiNjk1ZGRj",
                     client_secret: "NDMyMDMyOTktM2NhOS00MGJlLTg4NzYtZWJjMzNhNTE1NDYwYTc1NGU2NTAtNWI1ZS0xMWU0LTkwYTEtYTM4MzkzMzkxZTY1",
                     type: "code",
@@ -153,8 +154,7 @@ routes.
                     store: null,
                     load: null,
                     version: "v1"
-                );
-            Get ["/code"] = parameters => {
+                  );
                 var dict = (DynamicDictionary) this.Request.Query;
                 if(dict.ContainsKey("code")) {
                     plCode.exchange_code(dict["code"].ToString());
