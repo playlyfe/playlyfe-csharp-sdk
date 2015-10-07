@@ -189,7 +189,25 @@ String token = Playlyfe.Playlyfe.createJWT ("your client_id", "your client_secre
     3600 // 1 hour expiry Time
 );
 ```
-This is used to create jwt token which can be created when your user is authenticated. This token can then be sent to the frontend and or stored in your session. With this token the user can directly send requests to the Playlyfe API as the player.
+This is used to create jwt token which can be created when your user is authenticated. This token can then be sent to the frontend and or stored in your session. With this token the user can directly send requests to the Playlyfe API as the player. The token is usually generated in your backend server.
+
+If you would like to use a C# Client with the jwt flow then you can specify the type in the client creation part like this and you will need to request a new token from your backend route which serves the token using getJWTToken().
+```csharp
+var jwtClient = new Playlyfe.Playlyfe (
+	client_id: "your_client_id",
+	client_secret: "your_client_secret",
+	type: "jwt",
+	store: null,
+	load: null,
+	version: "v2"									
+);
+// Note you will need to run the ASP Server in the example_server project which serves the token
+jwtClient.getJWTToken ("http://localhost:3000/JWT_TOKEN");
+var player_id = new Dictionary<string, string> (){ { "player_id", "student1" } };
+dynamic player = jwtClient.get(route: "/runtime/player", query: player_id);
+Console.WriteLine (player);
+```
+You can take a look at the examples in the source to see how it works.
 
 # Client Scopes
 ![Client](https://cloud.githubusercontent.com/assets/1687946/9349193/e00fe91c-465f-11e5-8094-6e03c64a662c.png)
@@ -222,7 +240,7 @@ You can initiate a client by giving the client_id and client_secret params
 Playlyfe(
     client_id: "Your client id",
     client_secret: "Your client secret",
-    type: "client" or "code",
+    type: "client" or "code" or "jwt",
     redirect_uri: "The url to redirect to" //only for authorization code flow
     store: token => { Console.WriteLine("storing"); }  // The lambda which will persist the access token to a database. You have to persist the token to a database if you want the access token to remain the same in every request
     load:  delegate {
@@ -315,11 +333,18 @@ string get_login_url()
 
 **Exchange Code**
 ```csharp
-void exchange_code(string code)
+void exchange_code(String code)
 //This is used in the auth code flow so that the sdk can get the access token.
 //Before any request to the playlyfe api is made this has to be called atleast once.
 //This should be called in the the route/controller which you specified in your redirect_uri
 ```
+
+**Get The JWT Token From your backend route**
+```csharp
+void getJWTToken(String url)
+// where url is the url to your backend route which serves the JWT token
+```
+
 
 **Errors**  
 A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
