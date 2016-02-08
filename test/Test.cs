@@ -212,6 +212,24 @@ namespace Test
 			);
 			Console.WriteLine (token);
 		}
+
+		[Test]
+		public void customEndPoint()
+		{
+			Dictionary<string, string> player_id = new Dictionary<string, string> (){ { "player_id", "player0" } };
+			var pl = new Playlyfe.Playlyfe (
+				         client_id: "1234",
+				         client_secret: "aabbccdd",
+				         type: "client",
+				         store: null,
+				         load: null,
+						 tokenEndPoint: "http://localhost:3000/auth/token",
+						 apiEndPoint: "http://localhost:3000"
+			         );
+
+			dynamic player = pl.get (route: "/runtime/player", query: player_id, raw: true);
+			Console.WriteLine (player);
+		}
 	}
 }
 

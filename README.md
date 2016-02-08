@@ -20,6 +20,8 @@ var playlyfe = new Playlyfe(
     store: null,
     load: null,
     version: "v2",
+    tokenEndPoint: "https://playlyfe.com/auth/token",
+    apiEndPoint: "https://api.playlyfe.com"
 );
 // This will take your client id and secret and use it to fetch the 
 // access token to make further requests.

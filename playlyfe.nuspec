@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>playlyfe</id>
-    <version>0.5.2</version>
+    <version>0.5.3</version>
     <title>Playlyfe C# SDK</title>
     <authors>playlyfe</authors>
     <owners>playlyfe</owners>
@@ -26,4 +26,3 @@
     <file src="bin/Release/playlyfe.dll" target="lib/net40" />
   </files>
 </package>
-<!--  mono /usr/bin/nuget.exe pack playlyfe.nuspec  //to publish-->

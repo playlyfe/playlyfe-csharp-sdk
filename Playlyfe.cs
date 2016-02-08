@@ -8,6 +8,7 @@ using JWT;
 
 namespace Playlyfe
 {
+
     public class PlaylyfeException : Exception
     {
         public string Name { get; set; }
@@ -26,6 +27,8 @@ namespace Playlyfe
         private String type;
         private String redirect_uri;
         private String code;
+		private String tokenEndPoint;
+		private String apiEndPoint;
         private Func<Dictionary<string, string>, int> store;
         private Func<Dictionary<string, string>> load;
         private RestClient apiClient;
@@ -57,13 +60,18 @@ namespace Playlyfe
 
         public Playlyfe(String client_id, String client_secret, String type,
             Func<Dictionary<string, string>, int> store, Func<Dictionary<string, string>> load,
-            string redirect_uri = "", string version = "v2")
+			string redirect_uri = "", string version = "v2",
+			String tokenEndPoint = "https://playlyfe.com/auth/token",
+			String apiEndPoint = "https://api.playlyfe.com"
+		)
         {
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-            apiClient = new RestClient("https://api.playlyfe.com/" + version);
+            apiClient = new RestClient(apiEndPoint + "/" + version);
             this.client_id = client_id;
             this.client_secret = client_secret;
+			this.apiEndPoint = apiEndPoint;
+			this.tokenEndPoint = tokenEndPoint;
             this.type = type;
             if (store == null)
             {
@@ -86,7 +94,7 @@ namespace Playlyfe
 
         private void get_access_token()
         {
-            var client = new RestClient("https://playlyfe.com/auth/token");
+			var client = new RestClient(this.tokenEndPoint);
             var request = new RestRequest("", Method.POST);
             request.AddParameter("client_id", client_id);
             request.AddParameter("client_secret", client_secret);
