@@ -9,7 +9,7 @@ For a complete API Reference checkout [Playlyfe Developers](https://dev.playlyfe
 > Note: Breaking Changes this is the new version of the sdk which uses the Playlyfe api v2 by default if you still want to use the v1 api you can do that so by passing a version key in the options when creating a client with 'v1' as the value
 
 # Examples
-The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.  
+The Playlyfe class allows you to make rest api calls like GET, POST, .. etc.
 To get started initialize your client using client credentials flow and then start making requests
 **For v2 api**
 ```csharp
@@ -23,7 +23,7 @@ var playlyfe = new Playlyfe(
     tokenEndPoint: "https://playlyfe.com/auth/token",
     apiEndPoint: "https://api.playlyfe.com"
 );
-// This will take your client id and secret and use it to fetch the 
+// This will take your client id and secret and use it to fetch the
 // access token to make further requests.
 
 // To get infomation of a  player
@@ -185,7 +185,7 @@ In the client page select no for the first question and yes for the second
 ```csharp
 using Playlyfe;
 String[] scopes = { "player.runtime.read", "player.runtime.write" };
-String token = Playlyfe.Playlyfe.createJWT ("your client_id", "your client_secret", 
+String token = Playlyfe.Playlyfe.createJWT ("your client_id", "your client_secret",
     "student1",// The player id associated with your user
     scopes, // The scopes the player has access to
     3600 // 1 hour expiry Time
@@ -201,7 +201,7 @@ var jwtClient = new Playlyfe.Playlyfe (
 	type: "jwt",
 	store: null,
 	load: null,
-	version: "v2"									
+	version: "v2"
 );
 // Note you will need to run the ASP Server in the example_server project which serves the token
 jwtClient.getJWTToken ("http://localhost:3000/JWT_TOKEN");
@@ -284,7 +284,7 @@ get(
     route: "" // The api route to get data from
     query: Dictionary<string, string> // The query params that you want to send to the route
     raw: false // Whether you want the response to be in raw string form or json
-    list: false // When the response is an array then you need to pass this as true 
+    list: false // When the response is an array then you need to pass this as true
     //for proper deserialization and the result will be List<dynamic>
 )
 ```
@@ -294,7 +294,7 @@ dynamic post(
     route: "" // The api route to post data to
     query: Dictionary<string, string> // The query params that you want to send to the route
     body: new {} // The data you want to post to the api this will be automagically converted to json
-    list: false // When the response is an array then you need to pass this as true 
+    list: false // When the response is an array then you need to pass this as true
     //for proper deserialization and the result will be List<dynamic>
 )
 ```
@@ -348,22 +348,25 @@ void getJWTToken(String url)
 ```
 
 
-**Errors**  
+**Errors**
+
 A ```PlaylyfeException``` is thrown whenever an error occurs in each call.The Error contains a Name and Message field which can be used to determine the type of error that occurred.
 
 Author
 ======
-[Peter John](https://github.com/pyros2097)  
+[Peter John](https://github.com/pyros2097)
 
 Contributors
 ============
-[Kumar Harsh](https://github.com/kumarharsh)  
-[Rafael Kato](https://github.com/rafakato)  
+[Kumar Harsh](https://github.com/kumarharsh)
+[Rafael Kato](https://github.com/rafakato)
 
 License
 =======
-Playlyfe C# SDK  
-http://dev.playlyfe.com/  
+Playlyfe C# SDK
+
+http://dev.playlyfe.com/
+
 Copyright(c) 2014-2015, Playlyfe IT Solutions Pvt. Ltd, support@playlyfe.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -383,3 +386,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Contributing
+============
+1. Install Monodevelop >= 5.2
+2. Install nuget
+3. Run `mono /usr/bin/nuget.exe install` in the folder or install it from the gui
+4. To Run Test change to Debug Mode and View to Visual Designer Click and then on Pads Unit Tests
+5. Change version in Assembly.cs
+6. Make a release target
+7. Run `nuget pack playlyfe.nuspec`
+8. Upload the nuget package online
